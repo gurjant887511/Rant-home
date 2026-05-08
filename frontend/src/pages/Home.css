@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .home {
   min-height: 100vh;
   background-color: #0b1220;
@@ -87,3 +88,94 @@
     grid-template-columns: 1fr;
   }
 }
+=======
+.home {
+  min-height: 100vh;
+  background-color: #0b1220;
+  color: #e6eef8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+.home-hero {
+  background-image: linear-gradient(rgba(3,7,18,0.72), rgba(3,7,18,0.72)), url('https://images.unsplash.com/photo-1505691723518-36a6bd5b4a84?auto=format&fit=crop&w=1950&q=80');
+  color: #e6eef8;
+  padding: 120px 20px;
+  text-align: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3,7,18,0.0), rgba(3,7,18,0.45));
+  pointer-events: none;
+}
+
+.hero-content h2 {
+  font-size: 48px;
+  margin: 0 0 15px 0;
+  font-weight: 700;
+  color: #f8fbff;
+  text-shadow: 0 6px 20px rgba(2,6,23,0.7);
+}
+
+.hero-content p {
+  font-size: 18px;
+  margin: 0;
+  opacity: 0.95;
+  color: #dbeafe;
+}
+
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: rgba(10,14,22,0.35);
+  backdrop-filter: blur(6px) saturate(120%);
+  border-radius: 12px;
+}
+
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.properties-grid > * {
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.properties-grid > *:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+}
+
+.loading,
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 18px;
+  color: #9fb0d6;
+}
+
+@media (max-width: 768px) {
+  .hero-content h2 {
+    font-size: 32px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .properties-grid {
+    grid-template-columns: 1fr;
+  }
+}
+>>>>>>> 387879c9b953b3be03e99b06b9b3d62f91c8b64c
