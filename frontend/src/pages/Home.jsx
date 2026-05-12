@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import PropertyCard from '../components/PropertyCard';
 import SearchBar from '../components/SearchBar';

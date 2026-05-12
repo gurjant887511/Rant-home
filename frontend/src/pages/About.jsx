@@ -22,13 +22,13 @@ const About = () => {
 
         <div className="cards-section">
           <div className="info-card">
-            <div className="icon">🎯</div>
+            <div className="icon">ðŸŽ¯</div>
             <h3>Our Mission</h3>
             <p>At RentHub, our mission is to simplify the rental experience for students and people relocating to new cities. We aim to connect tenants and property owners through a trusted digital platform where finding a rental home becomes easier, safer, and more affordable.</p>
             <p className="mt-2">We believe that every student deserves a comfortable place to live without wasting time, money, or energy searching through unreliable sources.</p>
           </div>
           <div className="info-card">
-            <div className="icon">🌟</div>
+            <div className="icon">ðŸŒŸ</div>
             <h3>Our Vision</h3>
             <p>Our vision is to become one of the most trusted student rental platforms in India by helping millions of students and working professionals find the right accommodation without hassle.</p>
             <p className="mt-2">We want RentHub to create a future where moving to a new city feels exciting instead of stressful.</p>
@@ -39,23 +39,23 @@ const About = () => {
           <h3 className="section-title">What RentHub Offers</h3>
           <div className="features-grid">
             <div className="feature-item">
-              <h4>💰 Budget-Friendly Options</h4>
+              <h4>ðŸ’° Budget-Friendly Options</h4>
               <p>Find rooms, PGs, flats, and rental homes according to your budget and lifestyle needs.</p>
             </div>
             <div className="feature-item">
-              <h4>🔍 Easy Property Search</h4>
+              <h4>ðŸ” Easy Property Search</h4>
               <p>Search properties by city, area, rent price, facilities, and room type with a smooth and simple experience.</p>
             </div>
             <div className="feature-item">
-              <h4>✅ Verified Listings</h4>
+              <h4>âœ… Verified Listings</h4>
               <p>We aim to provide reliable and genuine property listings to help users avoid scams and fake information.</p>
             </div>
             <div className="feature-item">
-              <h4>🎓 Student-Focused Platform</h4>
+              <h4>ðŸŽ“ Student-Focused Platform</h4>
               <p>RentHub is specially built for students and newcomers who need affordable accommodation in unfamiliar cities.</p>
             </div>
             <div className="feature-item">
-              <h4>🤝 Direct Owner Connection</h4>
+              <h4>ðŸ¤ Direct Owner Connection</h4>
               <p>Users can connect directly with property owners or landlords for better communication and transparency.</p>
             </div>
           </div>
@@ -64,12 +64,12 @@ const About = () => {
         <section className="why-choose-section section-block">
           <h3 className="section-title">Why Choose RentHub?</h3>
           <ul className="benefits-list">
-            <li><span>✨</span> Simple and easy-to-use platform</li>
-            <li><span>🎓</span> Designed specially for students</li>
-            <li><span>💸</span> Affordable rental solutions</li>
-            <li><span>⚡</span> Faster property discovery</li>
-            <li><span>🔍</span> Transparent and user-friendly experience</li>
-            <li><span>🛡️</span> Helps users explore homes in new cities confidently</li>
+            <li><span>âœ¨</span> Simple and easy-to-use platform</li>
+            <li><span>ðŸŽ“</span> Designed specially for students</li>
+            <li><span>ðŸ’¸</span> Affordable rental solutions</li>
+            <li><span>âš¡</span> Faster property discovery</li>
+            <li><span>ðŸ”</span> Transparent and user-friendly experience</li>
+            <li><span>ðŸ›¡ï¸</span> Helps users explore homes in new cities confidently</li>
           </ul>
         </section>
 
