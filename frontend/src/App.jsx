@@ -1,12 +1,13 @@
-<<<<<<< HEAD
-import React from 'react';
+﻿import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Listings from './pages/Listings';
 import PropertyDetails from './pages/PropertyDetails';
 import AddProperty from './pages/AddProperty';
 import Login from './pages/Login';
+import About from './pages/About';
 import './App.css';
 
 function App() {
@@ -15,41 +16,15 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/listings" element={<Listings />} />
         <Route path="/property/:id" element={<PropertyDetails />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
 
 export default App;
-=======
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Listings from './pages/Listings';
-import PropertyDetails from './pages/PropertyDetails';
-import AddProperty from './pages/AddProperty';
-import Login from './pages/Login';
-import './App.css';
-
-function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/listings" element={<Listings />} />
-        <Route path="/property/:id" element={<PropertyDetails />} />
-        <Route path="/add-property" element={<AddProperty />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
-  );
-}
-
-export default App;
->>>>>>> 387879c9b953b3be03e99b06b9b3d62f91c8b64c

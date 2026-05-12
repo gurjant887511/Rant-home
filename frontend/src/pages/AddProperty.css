@@ -1,29 +1,31 @@
-<<<<<<< HEAD
-.add-property {
+﻿.add-property {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--bg);
   padding: 40px 20px;
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .add-property-container {
   max-width: 700px;
   margin: 0 auto;
-  background: white;
+  background: var(--card);
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .add-property-container h1 {
   margin: 0 0 10px 0;
   font-size: 32px;
   font-weight: 700;
-  color: #333;
+  color: var(--text);
 }
 
 .add-property-container > p {
   margin: 0 0 30px 0;
-  color: #999;
+  color: var(--muted);
   font-size: 16px;
 }
 
@@ -40,10 +42,22 @@
   border: 1px solid #c3e6cb;
 }
 
+[data-theme="dark"] .message.success {
+  background: rgba(79, 172, 254, 0.2);
+  color: #4faafe;
+  border: 1px solid #4faafe;
+}
+
 .message.error {
   background: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
+}
+
+[data-theme="dark"] .message.error {
+  background: rgba(255, 89, 89, 0.2);
+  color: #ff5959;
+  border: 1px solid #ff5959;
 }
 
 .property-form {
@@ -53,8 +67,13 @@
 }
 
 .form-section {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid;
+  border-bottom-color: #f0f0f0;
   padding-bottom: 30px;
+}
+
+[data-theme="dark"] .form-section {
+  border-bottom-color: #2a3540;
 }
 
 .form-section:last-of-type {
@@ -66,7 +85,7 @@
   margin: 0 0 20px 0;
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: var(--text);
 }
 
 .form-group {
@@ -77,7 +96,7 @@
 
 .form-group label {
   font-weight: 600;
-  color: #555;
+  color: var(--text);
   font-size: 14px;
 }
 
@@ -85,25 +104,33 @@
 .form-group textarea,
 .form-group select {
   padding: 12px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--muted);
   border-radius: 6px;
   font-size: 14px;
   font-family: inherit;
   outline: none;
   transition: border-color 0.3s ease;
+  background: var(--card);
+  color: var(--text);
 }
 
 .form-group input:hover,
 .form-group textarea:hover,
 .form-group select:hover {
-  border-color: #bbb;
+  border-color: var(--primary);
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-  border-color: #667eea;
+  border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group textarea:focus,
+[data-theme="dark"] .form-group select:focus {
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.2);
 }
 
 .form-row {
@@ -116,6 +143,10 @@
   margin: 10px 0 0 0;
   font-size: 13px;
   color: #2ecc71;
+}
+
+[data-theme="dark"] .image-count {
+  color: #4faafe;
 }
 
 .geo-btn {
@@ -136,9 +167,17 @@
   transform: translateY(-2px);
 }
 
+[data-theme="dark"] .geo-btn {
+  background: #4faafe;
+}
+
+[data-theme="dark"] .geo-btn:hover {
+  background: #3a8cd6;
+}
+
 .submit-btn {
   padding: 15px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--navbar-bg);
   color: white;
   border: none;
   border-radius: 6px;
@@ -152,6 +191,10 @@
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+[data-theme="dark"] .submit-btn:hover:not(:disabled) {
+  box-shadow: 0 8px 20px rgba(124, 92, 255, 0.3);
 }
 
 .submit-btn:disabled {
@@ -172,178 +215,3 @@
     font-size: 24px;
   }
 }
-=======
-.add-property {
-  min-height: 100vh;
-  background: #f5f5f5;
-  padding: 40px 20px;
-}
-
-.add-property-container {
-  max-width: 700px;
-  margin: 0 auto;
-  background: white;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.add-property-container h1 {
-  margin: 0 0 10px 0;
-  font-size: 32px;
-  font-weight: 700;
-  color: #333;
-}
-
-.add-property-container > p {
-  margin: 0 0 30px 0;
-  color: #999;
-  font-size: 16px;
-}
-
-.message {
-  padding: 15px;
-  border-radius: 6px;
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-
-.message.success {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.message.error {
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-.property-form {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.form-section {
-  border-bottom: 1px solid #f0f0f0;
-  padding-bottom: 30px;
-}
-
-.form-section:last-of-type {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.form-section h2 {
-  margin: 0 0 20px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-group label {
-  font-weight: 600;
-  color: #555;
-  font-size: 14px;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-  font-family: inherit;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input:hover,
-.form-group textarea:hover,
-.form-group select:hover {
-  border-color: #bbb;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.image-count {
-  margin: 10px 0 0 0;
-  font-size: 13px;
-  color: #2ecc71;
-}
-
-.geo-btn {
-  padding: 12px 20px;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
-
-.geo-btn:hover {
-  background: #2980b9;
-  transform: translateY(-2px);
-}
-
-.submit-btn {
-  padding: 15px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 20px;
-}
-
-.submit-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-}
-
-.submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-@media (max-width: 768px) {
-  .add-property-container {
-    padding: 20px;
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .add-property-container h1 {
-    font-size: 24px;
-  }
-}
->>>>>>> 387879c9b953b3be03e99b06b9b3d62f91c8b64c

@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 User-agent: *
 Disallow:
 
 Sitemap: https://www.example.com/sitemap.xml
 # Replace https://www.example.com with your production domain
-=======
-User-agent: *
-Disallow:
-
-Sitemap: https://www.example.com/sitemap.xml
-# Replace https://www.example.com with your production domain
->>>>>>> 387879c9b953b3be03e99b06b9b3d62f91c8b64c

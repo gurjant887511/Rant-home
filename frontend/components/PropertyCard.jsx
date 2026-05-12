@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
+﻿import React from 'react';
 import './PropertyCard.css';
 
 const PropertyCard = ({ data }) => {
@@ -28,11 +27,11 @@ const PropertyCard = ({ data }) => {
         </div>
         
         <div className="property-location">
-          <span className="property-city">📍 {city}</span>
+          <span className="property-city">ðŸ“ {city}</span>
         </div>
         
         <div className="property-footer">
-          <div className="property-price">₹{price.toLocaleString()}/month</div>
+          <div className="property-price">â‚¹{price.toLocaleString()}/month</div>
           <button className="view-btn">View Details</button>
         </div>
       </div>
@@ -40,9 +39,7 @@ const PropertyCard = ({ data }) => {
   );
 };
 
-export default PropertyCard;
-=======
-import React from 'react';
+export default PropertyCard;import React from 'react';
 import './PropertyCard.css';
 
 const PropertyCard = ({ data }) => {
@@ -71,11 +68,11 @@ const PropertyCard = ({ data }) => {
         </div>
         
         <div className="property-location">
-          <span className="property-city">📍 {city}</span>
+          <span className="property-city">ðŸ“ {city}</span>
         </div>
         
         <div className="property-footer">
-          <div className="property-price">₹{price.toLocaleString()}/month</div>
+          <div className="property-price">â‚¹{price.toLocaleString()}/month</div>
           <button className="view-btn">View Details</button>
         </div>
       </div>
@@ -84,4 +81,4 @@ const PropertyCard = ({ data }) => {
 };
 
 export default PropertyCard;
->>>>>>> 387879c9b953b3be03e99b06b9b3d62f91c8b64c
+
