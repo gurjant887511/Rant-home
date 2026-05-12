@@ -2,13 +2,13 @@
   "name": "rental-app",
   "version": "1.0.0",
   "description": "Full-stack rental property application",
-  "main": "server/server.js",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",
-    "server": "cd server && npm run dev",
-    "client": "cd client && npm start",
-    "build": "cd client && npm run build"
+    "start": "node backend/server.js",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm start",
+    "build": "cd frontend && npm install && npm run build"
   },
   "keywords": [
     "rental",
