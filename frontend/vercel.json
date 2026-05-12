@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "env": {
+    "NODE_ENV": "production",
+    "REACT_APP_API_URL": "@REACT_APP_API_URL"
+  }
+}
