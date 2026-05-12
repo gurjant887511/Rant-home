@@ -7,7 +7,6 @@ import './Listings.css';
 const Listings = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     fetchProperties();
@@ -26,7 +25,6 @@ const Listings = () => {
   };
 
   const handleFilter = (newFilters) => {
-    setFilters(newFilters);
     fetchProperties(newFilters);
   };
 

@@ -12,21 +12,21 @@ const PropertyDetails = () => {
   const [reviewMsg, setReviewMsg] = useState('');
 
   useEffect(() => {
+    const fetchPropertyDetails = async () => {
+      try {
+        const res = await api.getPropertyById(id);
+        if (res.data.success) {
+          setProperty(res.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching details", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchPropertyDetails();
   }, [id]);
-
-  const fetchPropertyDetails = async () => {
-    try {
-      const res = await api.getPropertyById(id);
-      if (res.data.success) {
-        setProperty(res.data.data);
-      }
-    } catch (error) {
-      console.error("Error fetching details", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const submitReview = async (e) => {
     e.preventDefault();

@@ -3,7 +3,7 @@ import PropertyDetailsModal from './PropertyDetailsModal';
 import './PropertyCard.css';
 
 const PropertyCard = ({ data }) => {
-  const { _id, title, price, city, type, images, area } = data;
+  const { title, price, city, type, images, area } = data;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
