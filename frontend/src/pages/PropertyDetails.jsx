@@ -72,6 +72,23 @@ const PropertyDetails = () => {
             <h2 className="text-2xl font-semibold mb-4">Description</h2>
             <p className="text-gray-700 whitespace-pre-line">{property.description}</p>
           </div>
+
+          {/* Features Section */}
+          {(property.furnished || property.ac || property.wifi || property.parking || property.foodAvailable || property.petAllowed || (property.genderPreference && property.genderPreference !== 'Any') || (property.nearbyCollege && property.nearbyCollege.length > 0)) && (
+            <div className="bg-white p-6 rounded-2xl shadow-sm border">
+              <h2 className="text-2xl font-semibold mb-4">Features & Amenities</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {property.furnished && <div className="bg-green-50 p-4 rounded-lg border border-green-200">✓ Furnished</div>}
+                {property.ac && <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">✓ AC Available</div>}
+                {property.wifi && <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">✓ WiFi Available</div>}
+                {property.parking && <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">✓ Parking Available</div>}
+                {property.foodAvailable && <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">✓ Food Available</div>}
+                {property.petAllowed && <div className="bg-pink-50 p-4 rounded-lg border border-pink-200">✓ Pets Allowed</div>}
+                {property.genderPreference && property.genderPreference !== 'Any' && <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-200">👥 {property.genderPreference}</div>}
+                {property.nearbyCollege && property.nearbyCollege.length > 0 && <div className="bg-cyan-50 p-4 rounded-lg border border-cyan-200">🎓 Near {property.nearbyCollege.join(', ')}</div>}
+              </div>
+            </div>
+          )}
         </div>
         
         <div className="space-y-6">

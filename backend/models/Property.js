@@ -53,6 +53,39 @@ const propertySchema = new mongoose.Schema({
       required: false
     }
   },
+  furnished: {
+    type: Boolean,
+    default: false
+  },
+  ac: {
+    type: Boolean,
+    default: false
+  },
+  wifi: {
+    type: Boolean,
+    default: false
+  },
+  parking: {
+    type: Boolean,
+    default: false
+  },
+  foodAvailable: {
+    type: Boolean,
+    default: false
+  },
+  genderPreference: {
+    type: String,
+    enum: ['Male', 'Female', 'Any'],
+    default: 'Any'
+  },
+  petAllowed: {
+    type: Boolean,
+    default: false
+  },
+  nearbyCollege: {
+    type: [String],
+    default: []
+  },
   createdAt: {
     type: Date,
     default: Date.now

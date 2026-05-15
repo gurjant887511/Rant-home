@@ -4,7 +4,10 @@ const cloudinary = require('../config/cloudinary');
 // Get all properties with filters
 exports.getAllProperties = async (req, res) => {
   try {
-    const { city, maxPrice, minPrice, type, page = 1, limit = 10 } = req.query;
+    const { 
+      city, maxPrice, minPrice, type, page = 1, limit = 10,
+      furnished, ac, wifi, parking, foodAvailable, genderPreference, petAllowed, nearbyCollege
+    } = req.query;
     
     let filter = {};
     
@@ -12,6 +15,14 @@ exports.getAllProperties = async (req, res) => {
     if (type) filter.type = type;
     if (maxPrice) filter.price = { ...filter.price, $lte: Number(maxPrice) };
     if (minPrice) filter.price = { ...filter.price, $gte: Number(minPrice) };
+    if (furnished === 'true') filter.furnished = true;
+    if (ac === 'true') filter.ac = true;
+    if (wifi === 'true') filter.wifi = true;
+    if (parking === 'true') filter.parking = true;
+    if (foodAvailable === 'true') filter.foodAvailable = true;
+    if (genderPreference && genderPreference !== 'Any') filter.genderPreference = genderPreference;
+    if (petAllowed === 'true') filter.petAllowed = true;
+    if (nearbyCollege) filter.nearbyCollege = { $in: [new RegExp(nearbyCollege, 'i')] };
     
     const skip = (page - 1) * limit;
     
@@ -99,7 +110,10 @@ exports.addReview = async (req, res) => {
 // Create new property
 exports.createProperty = async (req, res) => {
   try {
-    const { title, description, price, city, area, type, images, ownerName, phone, location } = req.body;
+    const { 
+      title, description, price, city, area, type, images, ownerName, phone, location,
+      furnished, ac, wifi, parking, foodAvailable, genderPreference, petAllowed, nearbyCollege
+    } = req.body;
     
     // Validation
     if (!title || !description || !price || !city || !area || !type || !ownerName || !phone) {
@@ -142,7 +156,15 @@ exports.createProperty = async (req, res) => {
       images: uploadedImages,
       ownerName,
       phone,
-      location: location || {}
+      location: location || {},
+      furnished: furnished || false,
+      ac: ac || false,
+      wifi: wifi || false,
+      parking: parking || false,
+      foodAvailable: foodAvailable || false,
+      genderPreference: genderPreference || 'Any',
+      petAllowed: petAllowed || false,
+      nearbyCollege: nearbyCollege || []
     });
     
     const savedProperty = await newProperty.save();
@@ -165,7 +187,10 @@ exports.createProperty = async (req, res) => {
 exports.updateProperty = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, price, city, area, type, images, ownerName, phone, location } = req.body;
+    const { 
+      title, description, price, city, area, type, images, ownerName, phone, location,
+      furnished, ac, wifi, parking, foodAvailable, genderPreference, petAllowed, nearbyCollege
+    } = req.body;
     
     const property = await Property.findById(id);
     
@@ -186,6 +211,14 @@ exports.updateProperty = async (req, res) => {
     if (ownerName) property.ownerName = ownerName;
     if (phone) property.phone = phone;
     if (location) property.location = location;
+    if (furnished !== undefined) property.furnished = furnished;
+    if (ac !== undefined) property.ac = ac;
+    if (wifi !== undefined) property.wifi = wifi;
+    if (parking !== undefined) property.parking = parking;
+    if (foodAvailable !== undefined) property.foodAvailable = foodAvailable;
+    if (genderPreference) property.genderPreference = genderPreference;
+    if (petAllowed !== undefined) property.petAllowed = petAllowed;
+    if (nearbyCollege !== undefined) property.nearbyCollege = nearbyCollege;
 
     if (images) {
       let uploadedImages = [];

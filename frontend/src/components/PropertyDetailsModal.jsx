@@ -17,7 +17,15 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
     ownerName,
     phone,
     whatsAppPhone,
-    location
+    location,
+    furnished,
+    ac,
+    wifi,
+    parking,
+    foodAvailable,
+    genderPreference,
+    petAllowed,
+    nearbyCollege
   } = property;
 
   const nextImage = () => {
@@ -107,6 +115,26 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
               <div className="modal-description">
                 <h3>Description</h3>
                 <p>{description}</p>
+              </div>
+            )}
+
+            {(furnished || ac || wifi || parking || foodAvailable || petAllowed || genderPreference !== 'Any' || (nearbyCollege && nearbyCollege.length > 0)) && (
+              <div className="modal-features-section">
+                <h3>Features & Amenities</h3>
+                <div className="features-grid">
+                  {furnished && <div className="feature-badge">✓ Furnished</div>}
+                  {ac && <div className="feature-badge">✓ AC Available</div>}
+                  {wifi && <div className="feature-badge">✓ WiFi Available</div>}
+                  {parking && <div className="feature-badge">✓ Parking Available</div>}
+                  {foodAvailable && <div className="feature-badge">✓ Food Available</div>}
+                  {petAllowed && <div className="feature-badge">✓ Pets Allowed</div>}
+                  {genderPreference && genderPreference !== 'Any' && (
+                    <div className="feature-badge">👥 {genderPreference}</div>
+                  )}
+                  {nearbyCollege && nearbyCollege.length > 0 && (
+                    <div className="feature-badge">🎓 Near {nearbyCollege.join(', ')}</div>
+                  )}
+                </div>
               </div>
             )}
 

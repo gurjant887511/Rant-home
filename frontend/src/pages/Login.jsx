@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Login.css';
 
 const Login = () => {
@@ -9,6 +11,7 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,25 +21,31 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
       setLoading(true);
       setMessage('');
 
-      // Simulate login
       if (formData.email && formData.password) {
-        // In a real app, make API call to authenticate
-        localStorage.setItem('token', 'dummy-token-' + Date.now());
-        setMessage('Login successful! Redirecting...');
-        
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 1500);
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+        const response = await axios.post(`${apiUrl}/auth/login`, {
+          email: formData.email,
+          password: formData.password
+        });
+
+        if (response.data.success) {
+          localStorage.setItem('token', response.data.data.token);
+          setMessage('Login successful! Redirecting...');
+          
+          setTimeout(() => {
+            navigate('/');
+          }, 1500);
+        }
       }
     } catch (error) {
-      setMessage('Login failed: ' + error.message);
+      setMessage(error.response?.data?.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -88,8 +97,8 @@ const Login = () => {
           </form>
 
           <div className="login-footer">
-            <p>Don't have an account? <a href="/signup">Sign up here</a></p>
-            <p><a href="/forgot-password">Forgot your password?</a></p>
+            <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
+            <p><Link to="/forgot-password">Forgot your password?</Link></p>
           </div>
         </div>
       </div>

@@ -17,14 +17,22 @@ const AddProperty = () => {
     location: {
       lat: '',
       lng: ''
-    }
+    },
+    furnished: false,
+    ac: false,
+    wifi: false,
+    parking: false,
+    foodAvailable: false,
+    genderPreference: 'Any',
+    petAllowed: false,
+    nearbyCollege: ''
   });
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     if (name.startsWith('location.')) {
       const locationField = name.split('.')[1];
@@ -38,7 +46,7 @@ const AddProperty = () => {
     } else {
       setFormData(prev => ({
         ...prev,
-        [name]: value
+        [name]: type === 'checkbox' ? checked : value
       }));
     }
   };
@@ -128,7 +136,15 @@ const AddProperty = () => {
           location: {
             lat: '',
             lng: ''
-          }
+          },
+          furnished: false,
+          ac: false,
+          wifi: false,
+          parking: false,
+          foodAvailable: false,
+          genderPreference: 'Any',
+          petAllowed: false,
+          nearbyCollege: ''
         });
       }
     } catch (error) {
@@ -351,6 +367,106 @@ const AddProperty = () => {
               <p style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '5px' }}>
                 Leave empty if same as phone number
               </p>
+            </div>
+          </div>
+
+          <div className="form-section">
+            <h2>Property Features</h2>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="furnished"
+                    checked={formData.furnished}
+                    onChange={handleChange}
+                  />
+                  <span style={{ marginLeft: '8px' }}>Furnished</span>
+                </label>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="ac"
+                    checked={formData.ac}
+                    onChange={handleChange}
+                  />
+                  <span style={{ marginLeft: '8px' }}>AC Available</span>
+                </label>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="wifi"
+                    checked={formData.wifi}
+                    onChange={handleChange}
+                  />
+                  <span style={{ marginLeft: '8px' }}>WiFi Available</span>
+                </label>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="parking"
+                    checked={formData.parking}
+                    onChange={handleChange}
+                  />
+                  <span style={{ marginLeft: '8px' }}>Parking Available</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="foodAvailable"
+                    checked={formData.foodAvailable}
+                    onChange={handleChange}
+                  />
+                  <span style={{ marginLeft: '8px' }}>Food Available</span>
+                </label>
+              </div>
+
+              <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="petAllowed"
+                    checked={formData.petAllowed}
+                    onChange={handleChange}
+                  />
+                  <span style={{ marginLeft: '8px' }}>Pets Allowed</span>
+                </label>
+              </div>
+
+              <div className="form-group">
+                <label>Gender Preference</label>
+                <select name="genderPreference" value={formData.genderPreference} onChange={handleChange} required>
+                  <option value="Any">Any</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Nearby College</label>
+                <input
+                  type="text"
+                  name="nearbyCollege"
+                  value={formData.nearbyCollege}
+                  onChange={handleChange}
+                  placeholder="e.g., IIT, NIT, DU"
+                />
+              </div>
             </div>
           </div>
 

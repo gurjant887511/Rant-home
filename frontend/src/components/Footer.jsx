@@ -24,9 +24,9 @@ const Footer = () => {
 
           <div className="footer-contact">
             <h3>Contact Us</h3>
-            <p><span>ðŸ“</span> 123 RentHub Street, New Delhi, India</p>
-            <p><span>ðŸ“ž</span> +91 9876543210</p>
-            <p><span>âœ‰ï¸</span> support@renthub.com</p>
+            <p><span></span> RentHub Street, New Delhi, India</p>
+            <p><span></span> +91 9876543210</p>
+            <p><span></span>renthub.ranthome@gmail.com</p>
           </div>
 
           <div className="footer-social">
