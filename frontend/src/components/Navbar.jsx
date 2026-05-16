@@ -40,6 +40,9 @@ const Navbar = () => {
           <li className="nav-item">
             <a href="/login" className="nav-link login-link">Login</a>
           </li>
+          <li className="nav-item">
+            <a href="/signup" className="nav-link signup-link">Sign Up</a>
+          </li>
         </ul>
 
         <div className="navbar-actions">

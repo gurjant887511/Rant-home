@@ -7,6 +7,7 @@ dotenv.config();
 
 const connectDB = require('./config/db');
 const propertyRoutes = require('./routes/propertyRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 connectDB();
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
 
 // Health check route

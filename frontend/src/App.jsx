@@ -7,6 +7,7 @@ import Listings from './pages/Listings';
 import PropertyDetails from './pages/PropertyDetails';
 import AddProperty from './pages/AddProperty';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import About from './pages/About';
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/property/:id" element={<PropertyDetails />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
       <Footer />
     </Router>
