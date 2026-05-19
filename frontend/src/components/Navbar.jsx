@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
+import logo from '../images/Rent hub logo.png';
 
 const Navbar = () => {
   const [theme, setTheme] = useState('light');
@@ -33,7 +34,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <h1>RentHub</h1>
+          <img src={logo} alt="RentHub Logo" className="navbar-logo-img" />
         </div>
 
         <ul className="nav-menu">
