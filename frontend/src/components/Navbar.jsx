@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const [theme, setTheme] = useState('light');
+  const location = useLocation();
 
   useEffect(() => {
     const saved = localStorage.getItem('theme');
@@ -17,6 +19,16 @@ const Navbar = () => {
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
   };
+
+  const navLinks = [
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/listings', label: 'Listings' },
+    { path: '/add-property', label: 'Add Property' },
+    { path: '/login', label: 'Login' },
+    { path: '/signup', label: 'Sign Up' },
+  ];
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -25,24 +37,26 @@ const Navbar = () => {
         </div>
 
         <ul className="nav-menu">
-          <li className="nav-item">
-            <a href="/" className="nav-link">Home</a>
-          </li>
-          <li className="nav-item">
-            <a href="/about" className="nav-link">About</a>
-          </li>
-          <li className="nav-item">
-            <a href="/listings" className="nav-link">Listings</a>
-          </li>
-          <li className="nav-item">
-            <a href="/add-property" className="nav-link add-property-link">Add Property</a>
-          </li>
-          <li className="nav-item">
-            <a href="/login" className="nav-link login-link">Login</a>
-          </li>
-          <li className="nav-item">
-            <a href="/signup" className="nav-link signup-link">Sign Up</a>
-          </li>
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.path;
+            const isAddProperty = link.path === '/add-property';
+            const isLogin = link.path === '/login';
+            const isSignUp = link.path === '/signup';
+
+            let linkClass = 'nav-link';
+            if (isActive) linkClass += ' active';
+            if (isAddProperty) linkClass += ' add-property-link';
+            if (isLogin) linkClass += ' login-link';
+            if (isSignUp) linkClass += ' signup-link';
+
+            return (
+              <li className="nav-item" key={link.path}>
+                <Link to={link.path} className={linkClass}>
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="navbar-actions">

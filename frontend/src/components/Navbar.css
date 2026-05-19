@@ -95,6 +95,17 @@
   width: 100%;
 }
 
+/* Active link - current page indicator */
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Special styles for add-property link */
 .add-property-link {
   background: rgba(255, 255, 255, 0.2);
   padding: 8px 20px;
@@ -106,6 +117,12 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
+.add-property-link.active {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: white;
+}
+
+/* Login link styles */
 .login-link {
   background: white;
   color: #667eea;
@@ -119,6 +136,31 @@
   color: #764ba2;
 }
 
+.login-link.active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #764ba2;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+/* Sign Up link styles */
+.signup-link {
+  background: #ff6b6b;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.signup-link:hover {
+  background: #ee5a24;
+  color: white;
+}
+
+.signup-link.active {
+  background: #ee5a24;
+  box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+}
+
 @media (max-width: 768px) {
   .navbar-container {
     flex-direction: column;
@@ -128,6 +170,7 @@
   .nav-menu {
     gap: 15px;
     justify-content: center;
+    flex-wrap: wrap;
   }
 
   .nav-link {

@@ -1,57 +1,47 @@
-﻿import React from 'react';
+﻿import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
+  const location = useLocation();
+
+  const navLinks = [
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/listings', label: 'Listings' },
+    { path: '/add-property', label: 'Add Property' },
+    { path: '/login', label: 'Login' },
+    { path: '/signup', label: 'Sign Up' },
+  ];
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <h1>ðŸ  RentHub</h1>
+          <h1>🏠 RentHub</h1>
         </div>
 
         <ul className="nav-menu">
-          <li className="nav-item">
-            <a href="/" className="nav-link">Home</a>
-          </li>
-          <li className="nav-item">
-            <a href="/listings" className="nav-link">Listings</a>
-          </li>
-          <li className="nav-item">
-            <a href="/add-property" className="nav-link add-property-link">Add Property</a>
-          </li>
-          <li className="nav-item">
-            <a href="/login" className="nav-link login-link">Login</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
-};
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.path;
+            const isAddProperty = link.path === '/add-property';
+            const isLogin = link.path === '/login';
+            const isSignUp = link.path === '/signup';
 
-export default Navbar;import React from 'react';
-import './Navbar.css';
+            let linkClass = 'nav-link';
+            if (isActive) linkClass += ' active';
+            if (isAddProperty) linkClass += ' add-property-link';
+            if (isLogin) linkClass += ' login-link';
+            if (isSignUp) linkClass += ' signup-link';
 
-const Navbar = () => {
-  return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-logo">
-          <h1>ðŸ  RentHub</h1>
-        </div>
-
-        <ul className="nav-menu">
-          <li className="nav-item">
-            <a href="/" className="nav-link">Home</a>
-          </li>
-          <li className="nav-item">
-            <a href="/listings" className="nav-link">Listings</a>
-          </li>
-          <li className="nav-item">
-            <a href="/add-property" className="nav-link add-property-link">Add Property</a>
-          </li>
-          <li className="nav-item">
-            <a href="/login" className="nav-link login-link">Login</a>
-          </li>
+            return (
+              <li className="nav-item" key={link.path}>
+                <Link to={link.path} className={linkClass}>
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </nav>
@@ -59,4 +49,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

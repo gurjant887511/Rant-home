@@ -63,109 +63,17 @@
   width: 100%;
 }
 
-.add-property-link {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 8px 20px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.add-property-link:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.login-link {
-  background: white;
-  color: #667eea;
-  padding: 8px 20px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-
-.login-link:hover {
-  background: rgba(255, 255, 255, 0.9);
-  color: #764ba2;
-}
-
-@media (max-width: 768px) {
-  .navbar-container {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .nav-menu {
-    gap: 15px;
-    justify-content: center;
-  }
-
-  .nav-link {
-    font-size: 14px;
-  }
-}.navbar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-logo h1 {
-  margin: 0;
-  color: white;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.nav-menu {
-  display: flex;
-  list-style: none;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-item {
-  position: relative;
-}
-
-.nav-link {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: white;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover {
-  color: #fff;
-}
-
-.nav-link:hover::after {
+/* Active link - the one that is currently clicked/selected */
+.nav-link.active::after {
   width: 100%;
 }
 
+.nav-link.active {
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Special styles for add-property link */
 .add-property-link {
   background: rgba(255, 255, 255, 0.2);
   padding: 8px 20px;
@@ -177,6 +85,12 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
+.add-property-link.active {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: white;
+}
+
+/* Login link styles */
 .login-link {
   background: white;
   color: #667eea;
@@ -190,6 +104,31 @@
   color: #764ba2;
 }
 
+.login-link.active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #764ba2;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+/* Sign Up link styles */
+.signup-link {
+  background: #ff6b6b;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.signup-link:hover {
+  background: #ee5a24;
+  color: white;
+}
+
+.signup-link.active {
+  background: #ee5a24;
+  box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+}
+
 @media (max-width: 768px) {
   .navbar-container {
     flex-direction: column;
@@ -199,10 +138,10 @@
   .nav-menu {
     gap: 15px;
     justify-content: center;
+    flex-wrap: wrap;
   }
 
   .nav-link {
     font-size: 14px;
   }
 }
-
