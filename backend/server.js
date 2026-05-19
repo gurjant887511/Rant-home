@@ -15,7 +15,7 @@ const app = express();
 const corsOptions = {
   origin: process.env.ALLOWED_ORIGINS 
     ? process.env.ALLOWED_ORIGINS.split(',')
-    : ['http://localhost:3000', 'http://localhost:8001', 'http://localhost:8000'],
+    : ['http://localhost:3000', 'http://localhost:8001', 'http://localhost:8000', 'http://localhost:5173'],
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

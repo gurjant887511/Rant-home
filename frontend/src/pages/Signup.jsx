@@ -31,11 +31,17 @@ const Signup = () => {
       return;
     }
 
+    // Safe API URL check for both Create React App and Vite
+    const apiUrl = (typeof process !== 'undefined' && process.env.REACT_APP_API_URL) 
+      || (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) 
+      || 'http://localhost:8000/api';
+
     try {
       setLoading(true);
       setMessage('');
 
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+      console.log('Sending request to API:', apiUrl);
+
       const response = await axios.post(`${apiUrl}/auth/register`, {
         name: formData.name,
         email: formData.email,
@@ -51,7 +57,13 @@ const Signup = () => {
         }, 1500);
       }
     } catch (error) {
-      setMessage(error.response?.data?.message || 'Registration failed. Please try again.');
+      console.error('Signup Error:', error);
+      if (error.response?.data?.message) {
+        setMessage(error.response.data.message);
+      } else {
+        // Agar server connect nahi hua toh exact network error show karega
+        setMessage(`Connection Error: Failed to connect to "${apiUrl}". Make sure backend is running here!`);
+      }
     } finally {
       setLoading(false);
     }
