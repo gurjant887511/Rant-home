@@ -1,57 +1,45 @@
+/* =========================
+   NAVBAR MAIN
+========================= */
 .navbar {
   background: var(--navbar-bg);
-  padding: 0;
+  height: 100px;
+  width: 100%;
+  padding: 0 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
-  z-index: 100;
-  transition: background 0.3s ease;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
 }
 
 .navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 15px 20px;
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 30px;
 }
 
+/* =========================
+   LOGO
+========================= */
 .navbar-logo {
+  display: flex;
+  align-items: center;
   flex-shrink: 0;
 }
 
 .navbar-logo-img {
-  height: 40px;
+  height: 80px;
+  max-height: 80px;
   width: auto;
+  object-fit: contain;
   display: block;
-}
-
-.navbar-actions {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.theme-toggle {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: capitalize;
-}
-
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
 }
 
 .navbar-logo h1 {
@@ -61,10 +49,14 @@
   font-weight: 700;
 }
 
+/* =========================
+   NAV MENU
+========================= */
 .nav-menu {
   display: flex;
+  align-items: center;
   list-style: none;
-  gap: 30px;
+  gap: 25px;
   margin: 0;
   padding: 0;
 }
@@ -78,44 +70,44 @@
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
   position: relative;
+  white-space: nowrap;
 }
 
+/* Hover underline */
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
-  bottom: -5px;
   left: 0;
-  width: 0;
+  bottom: -5px;
+  width: 0%;
   height: 2px;
   background: white;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover {
-  color: #fff;
+  transition: 0.3s ease;
 }
 
 .nav-link:hover::after {
   width: 100%;
 }
 
-/* Active link - current page indicator */
 .nav-link.active::after {
   width: 100%;
 }
 
 .nav-link.active {
   font-weight: 700;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-/* Special styles for add-property link */
+/* =========================
+   BUTTON STYLES
+========================= */
+
+/* Add Property */
 .add-property-link {
   background: rgba(255, 255, 255, 0.2);
-  padding: 8px 20px;
-  border-radius: 20px;
+  padding: 10px 18px;
+  border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -123,17 +115,12 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-.add-property-link.active {
-  background: rgba(255, 255, 255, 0.4);
-  border-color: white;
-}
-
-/* Login link styles */
+/* Login */
 .login-link {
   background: white;
   color: #667eea;
-  padding: 8px 20px;
-  border-radius: 20px;
+  padding: 10px 18px;
+  border-radius: 25px;
   font-weight: 600;
 }
 
@@ -142,39 +129,94 @@
   color: #764ba2;
 }
 
-.login-link.active {
-  background: rgba(255, 255, 255, 0.9);
-  color: #764ba2;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
-}
-
-/* Sign Up link styles */
+/* Signup */
 .signup-link {
   background: #ff6b6b;
   color: white;
-  padding: 8px 20px;
-  border-radius: 20px;
+  padding: 10px 18px;
+  border-radius: 25px;
   font-weight: 600;
 }
 
 .signup-link:hover {
   background: #ee5a24;
+}
+
+/* =========================
+   THEME TOGGLE
+========================= */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
-.signup-link.active {
-  background: #ee5a24;
-  box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
-@media (max-width: 768px) {
+/* =========================
+   TABLET RESPONSIVE
+========================= */
+@media (max-width: 992px) {
+  .navbar {
+    height: auto;
+    padding: 15px;
+  }
+
   .navbar-container {
     flex-direction: column;
     gap: 15px;
   }
 
   .nav-menu {
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navbar-logo-img {
+    height: 150px;
+  }
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+
+  .navbar {
+    height: auto;
+    padding: 12px 15px;
+  }
+
+  .navbar-container {
+    flex-direction: column;
+    align-items: center;
     gap: 15px;
+  }
+
+  /* Logo */
+  .navbar-logo-img {
+    height: 75px;
+  }
+
+  /* Menu */
+  .nav-menu {
+    width: 100%;
+    gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -182,4 +224,129 @@
   .nav-link {
     font-size: 14px;
   }
+
+  /* Buttons */
+  .add-property-link,
+  .login-link,
+  .signup-link {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  /* Theme Toggle */
+  .theme-toggle {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+
+  .navbar-actions {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 10px;
+  }
+
+  .navbar-logo-img {
+    height: 65px;
+  }
+
+  .nav-menu {
+    gap: 10px;
+  }
+
+  .nav-link {
+    font-size: 13px;
+  }
+
+  .add-property-link,
+  .login-link,
+  .signup-link {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
+  .theme-toggle {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+/* =========================
+   User Icon
+========================= */
+.user-icon-item {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon-btn {
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.user-icon-btn svg { display: block; }
+
+/* logged in: blue fill */
+.user-icon-btn.logged { color: #3b82f6; border-color: rgba(59,130,246,0.15); background: rgba(59,130,246,0.06); }
+
+/* logged-out: color depends on theme */
+.user-icon-btn.logged-out.light { color: #111827; background: rgba(255,255,255,0.9); border-color: rgba(0,0,0,0.06); }
+.user-icon-btn.logged-out.dark { color: #ffffff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
+
+/* small on mobile */
+@media (max-width: 480px) {
+  .user-icon-btn { height: 30px; width: 30px; }
+}
+
+/* =========================
+   Logo Centering & Size Fixes
+   (Ensure logo fits navbar and is horizontally centered)
+========================= */
+
+/* Put logo into the center grid column and center it */
+.navbar-logo {
+  grid-column: 2;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+}
+
+/* Make sure logo image fits within the navbar height */
+.navbar-logo-img {
+  height: 80px;
+  max-height: 80px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Slightly smaller logo on tablet/mobile */
+@media (max-width: 992px) {
+  .navbar-logo-img { height: 70px; max-height:70px; }
+}
+
+@media (max-width: 768px) {
+  .navbar-logo-img { height: 60px; max-height:60px; }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo-img { height: 50px; max-height:50px; }
 }
