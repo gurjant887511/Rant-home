@@ -403,9 +403,14 @@
    MOBILE RESPONSIVE - HAMBURGER MENU
 ========================= */
 @media (max-width: 768px) {
+  .navbar {
+    height: auto;
+    padding: 12px 15px;
+  }
+
   .hamburger {
     display: flex;
-    order: 2;
+    order: 3;
   }
 
   .menu-overlay {
@@ -413,17 +418,34 @@
   }
 
   .navbar-container {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
     position: relative;
   }
 
   .navbar-logo {
     order: 1;
-    grid-column: auto;
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .navbar-logo-img {
+    height: 60px;
+    max-height: 60px;
   }
 
   .navbar-actions {
+    order: 2;
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .hamburger {
     order: 3;
+    grid-column: 3;
+    justify-self: end;
   }
 
   .nav-menu {
@@ -458,6 +480,7 @@
     padding: 15px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     white-space: normal;
+    font-size: 14px;
   }
 
   .nav-link::after {
@@ -477,12 +500,11 @@
   .signup-link {
     border-radius: 0;
     margin: 5px 0;
+    padding: 15px 20px;
   }
 
-  .navbar-container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0;
+  .theme-toggle {
+    padding: 7px 12px;
+    font-size: 13px;
   }
 }
