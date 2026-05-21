@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import EmailVerification from '../components/EmailVerification';
 import './Signup.css';
 
 const Signup = () => {
@@ -13,6 +14,8 @@ const Signup = () => {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [showVerification, setShowVerification] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -49,12 +52,8 @@ const Signup = () => {
       });
 
       if (response.data.success) {
-        localStorage.setItem('token', response.data.data.token);
-        setMessage('Registration successful! Redirecting...');
-        
-        setTimeout(() => {
-          navigate('/');
-        }, 1500);
+        setRegisteredEmail(formData.email);
+        setShowVerification(true);
       }
     } catch (error) {
       console.error('Signup Error:', error);
@@ -68,6 +67,28 @@ const Signup = () => {
       setLoading(false);
     }
   };
+
+  const handleVerified = (userData) => {
+    setMessage('Email verified! Redirecting to home...');
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
+  };
+
+  const handleBackToSignup = () => {
+    setShowVerification(false);
+    setFormData({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+    setMessage('');
+  };
+
+  if (showVerification) {
+    return <EmailVerification email={registeredEmail} onVerified={handleVerified} onBackToSignup={handleBackToSignup} />;
+  }
 
   return (
     <div className="signup">

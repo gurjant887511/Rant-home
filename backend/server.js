@@ -63,5 +63,9 @@ app.use((req, res) => {
 // Start server
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log('\n' + '='.repeat(50));
+  console.log(`✅ SERVER RUNNING ON PORT: ${PORT}`);
+  console.log(`🌐 API URL: http://localhost:${PORT}/api`);
+  console.log(`📡 Health Check: http://localhost:${PORT}/api/health`);
+  console.log('='.repeat(50) + '\n');
 });

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiMail, FiLock, FiArrowRight, FiHome } from 'react-icons/fi';
+import EmailVerification from '../components/EmailVerification';
 import './Login.css';
 import heroImage from '../images/hero.jpg';
 
@@ -14,6 +15,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+  const [showVerification, setShowVerification] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -58,7 +61,13 @@ const Login = () => {
     } catch (error) {
       console.error('Login Error:', error);
       setMessageType('error');
-      if (error.response?.data?.message) {
+      
+      // Handle unverified email case
+      if (error.response?.status === 403 && error.response?.data?.data?.requiresEmailVerification) {
+        setUnverifiedEmail(formData.email);
+        setShowVerification(true);
+        setMessage('');
+      } else if (error.response?.data?.message) {
         setMessage(error.response.data.message);
       } else {
         setMessage(`Connection Error: ${error.message}. Is backend running?`);
@@ -67,6 +76,28 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  const handleVerified = (userData) => {
+    setMessage('Email verified! Redirecting to home...');
+    localStorage.setItem('token', userData.token);
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
+  };
+
+  const handleBackToLogin = () => {
+    setShowVerification(false);
+    setUnverifiedEmail('');
+    setFormData({
+      email: '',
+      password: ''
+    });
+    setMessage('');
+  };
+
+  if (showVerification) {
+    return <EmailVerification email={unverifiedEmail} onVerified={handleVerified} onBackToSignup={handleBackToLogin} />;
+  }
 
   return (
     <div className="login-page">

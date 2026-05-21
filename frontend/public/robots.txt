@@ -1,5 +1,4 @@
 User-agent: *
-Disallow:
+Allow: /
 
-Sitemap: https://www.example.com/sitemap.xml
-# Replace https://www.example.com with your production domain
+Sitemap: https://renthub.in/sitemap.xml

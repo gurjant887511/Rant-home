@@ -31,8 +31,8 @@ const Listings = () => {
   return (
     <div className="listings">
       <div className="listings-header">
-        <h1>All Listings</h1>
-        <p>Browse all available rental properties</p>
+        <h1>Student Rooms, PGs, and Hostels for Rent</h1>
+        <p>Browse verified rental properties, student accommodations, and budget-friendly PG near university campuses.</p>
       </div>
 
       <div className="listings-container">
@@ -52,6 +52,11 @@ const Listings = () => {
           ) : (
             <div className="no-results">No properties found matching your filters.</div>
           )}
+          
+          <div className="seo-listings-footer" style={{ marginTop: '2rem', padding: '1rem', borderTop: '1px solid #eee', fontSize: '0.85rem', color: '#6b7280' }}>
+            <h2>Find Your Next Home with RentHub</h2>
+            <p>From <strong>student room rent in India</strong> to finding a <strong>PG near university</strong>, RentHub offers the best listings. Filter by your needs to find <strong>hostel rooms for students</strong>, <strong>monthly room rent</strong> options, or a cozy <strong>room near university</strong>. We provide trusted options for those looking for <strong>ladkiyo ke liye safe PG</strong> or <strong>ladko ke liye PG</strong>.</p>
+          </div>
         </main>
       </div>
     </div>
