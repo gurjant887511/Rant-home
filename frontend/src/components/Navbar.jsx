@@ -5,6 +5,7 @@ import logo from '../images/Rent hub logo.png';
 
 const Navbar = () => {
   const [theme, setTheme] = useState('light');
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -19,6 +20,14 @@ const Navbar = () => {
     setTheme(next);
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   const navLinks = [
@@ -37,7 +46,22 @@ const Navbar = () => {
           <img src={logo} alt="RentHub Logo" className="navbar-logo-img" />
         </div>
 
-        <ul className="nav-menu">
+        {/* Hamburger Menu Button */}
+        <button 
+          className={`hamburger ${menuOpen ? 'active' : ''}`} 
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        {menuOpen && <div className="menu-overlay" onClick={closeMenu}></div>}
+
+        {/* Navigation Menu */}
+        <ul className={`nav-menu ${menuOpen ? 'active' : ''}`}>
           {navLinks.map((link) => {
             const isActive = location.pathname === link.path;
             const isAddProperty = link.path === '/add-property';
@@ -52,7 +76,11 @@ const Navbar = () => {
 
             return (
               <li className="nav-item" key={link.path}>
-                <Link to={link.path} className={linkClass}>
+                <Link 
+                  to={link.path} 
+                  className={linkClass}
+                  onClick={closeMenu}
+                >
                   {link.label}
                 </Link>
               </li>
