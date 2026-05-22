@@ -81,6 +81,13 @@
   padding-bottom: 0;
 }
 
+/* Ensure the last section inside the form doesn't render a border
+   (use last-child for cases where last-of-type may not match) */
+.property-form .form-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 .form-section h2 {
   margin: 0 0 20px 0;
   font-size: 18px;

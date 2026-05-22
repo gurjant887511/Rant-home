@@ -19,7 +19,7 @@
 .navbar-logo h1 {
   margin: 0;
   color: white;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
 }
 
@@ -88,6 +88,16 @@
 .add-property-link.active {
   background: rgba(255, 255, 255, 0.4);
   border-color: white;
+}
+
+/* Hide underline for Add Property button (override nav-link::after) */
+.add-property-link::after,
+.add-property-link:hover::after,
+.add-property-link.active::after {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  content: none !important;
 }
 
 /* Login link styles */
