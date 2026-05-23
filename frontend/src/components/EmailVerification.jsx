@@ -11,7 +11,7 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
 
   const apiUrl = (typeof process !== 'undefined' && process.env.REACT_APP_API_URL) 
     || (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) 
-    || 'http://localhost:8000/api';
+    || (process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:8000/api');
 
   const handleVerify = async (e) => {
     e.preventDefault();

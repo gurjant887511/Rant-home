@@ -49,7 +49,7 @@
   line-height: 1.8;
   color: var(--muted);
   margin-bottom: 20px;
-  text-align: justify;
+  text-align: left;
 }
 
 .about-intro p strong {
