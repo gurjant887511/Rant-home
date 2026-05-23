@@ -9,9 +9,7 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
   const [resendLoading, setResendLoading] = useState(false);
   const [codeSent, setCodeSent] = useState(true);
 
-  const apiUrl = (typeof process !== 'undefined' && process.env.REACT_APP_API_URL) 
-    || (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) 
-    || (process.env.NODE_ENV === 'production' ? 'https://rant-home.onrender.com/api' : 'http://localhost:8000/api');
+  const apiUrl = process.env.NODE_ENV === 'production' ? 'https://rant-home.onrender.com/api' : 'http://localhost:8000/api';
 
   const handleVerify = async (e) => {
     e.preventDefault();
