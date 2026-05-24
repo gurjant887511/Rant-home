@@ -198,12 +198,55 @@ exports.loginUser = async (req, res) => {
     }
 
     const user = await User.findOne({ email: email.toLowerCase() });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    
+    if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
+    // Check if user is locked out
+    if (user.loginLockoutUntil && user.loginLockoutUntil > new Date()) {
+      const remainingTime = Math.ceil((user.loginLockoutUntil - new Date()) / 1000);
+      return res.status(429).json({ 
+        success: false, 
+        message: `Too many failed attempts. Please try again in ${remainingTime} seconds.`,
+        remainingTime
+      });
+    }
+
+    // Check if password is correct
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    
+    if (!isPasswordCorrect) {
+      // Increment failed attempts
+      user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
+
+      // If 3 failed attempts, lock the account for 30 seconds
+      if (user.failedLoginAttempts >= 3) {
+        user.loginLockoutUntil = new Date(Date.now() + 30 * 1000); // 30 seconds lockout
+        await user.save();
+        return res.status(429).json({ 
+          success: false, 
+          message: 'Too many failed attempts. Account locked for 30 seconds.',
+          remainingTime: 30
+        });
+      }
+
+      await user.save();
+      const attemptsRemaining = 3 - user.failedLoginAttempts;
+      return res.status(401).json({ 
+        success: false, 
+        message: `Invalid credentials. ${attemptsRemaining} attempt${attemptsRemaining !== 1 ? 's' : ''} remaining before lockout.`,
+        attemptsRemaining
+      });
+    }
+
+    // Reset failed attempts on successful login
+    user.failedLoginAttempts = 0;
+    user.loginLockoutUntil = null;
+
     // Check if email is verified
     if (!user.isEmailVerified) {
+      await user.save(); // Save the reset failed attempts
       return res.status(403).json({ 
         success: false, 
         message: 'Please verify your email first',
@@ -212,6 +255,8 @@ exports.loginUser = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '30d' });
+
+    await user.save(); // Save the reset failed attempts
 
     res.status(200).json({ 
       success: true, 

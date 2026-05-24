@@ -29,6 +29,15 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: null
   },
+  // Security: Failed login tracking
+  failedLoginAttempts: {
+    type: Number,
+    default: 0
+  },
+  loginLockoutUntil: {
+    type: Date,
+    default: null
+  },
   createdAt: {
     type: Date,
     default: Date.now

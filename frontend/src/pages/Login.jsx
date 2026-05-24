@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiMail, FiLock, FiArrowRight, FiHome } from 'react-icons/fi';
@@ -14,10 +14,30 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error' or 'warning'
   const [showVerification, setShowVerification] = useState(false);
   const [unverifiedEmail, setUnverifiedEmail] = useState('');
+  const [lockoutRemaining, setLockoutRemaining] = useState(0); // Remaining lockout time in seconds
+  const [attemptsRemaining, setAttemptsRemaining] = useState(3);
   const navigate = useNavigate();
+
+  // Countdown timer for lockout
+  useEffect(() => {
+    if (lockoutRemaining <= 0) return;
+
+    const timer = setInterval(() => {
+      setLockoutRemaining(prev => {
+        if (prev <= 1) {
+          setMessage('');
+          setMessageType('');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [lockoutRemaining]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,6 +70,7 @@ const Login = () => {
           localStorage.setItem('token', response.data.data.token);
           setMessageType('success');
           setMessage('Login successful! Redirecting...');
+          setAttemptsRemaining(3); // Reset attempts on success
           
           setTimeout(() => {
             navigate('/');
@@ -60,12 +81,25 @@ const Login = () => {
       console.error('Login Error:', error);
       setMessageType('error');
       
+      // Handle account lockout (429 status)
+      if (error.response?.status === 429) {
+        const remainingTime = error.response?.data?.remainingTime || 30;
+        setLockoutRemaining(remainingTime);
+        setMessage(`Account locked for security. Try again in ${remainingTime} seconds.`);
+        setMessageType('warning');
+      }
       // Handle unverified email case
-      if (error.response?.status === 403 && error.response?.data?.data?.requiresEmailVerification) {
+      else if (error.response?.status === 403 && error.response?.data?.data?.requiresEmailVerification) {
         setUnverifiedEmail(formData.email);
         setShowVerification(true);
         setMessage('');
-      } else if (error.response?.data?.message) {
+      } 
+      // Handle invalid credentials with attempts remaining
+      else if (error.response?.status === 401 && error.response?.data?.attemptsRemaining) {
+        setAttemptsRemaining(error.response.data.attemptsRemaining);
+        setMessage(error.response.data.message);
+      }
+      else if (error.response?.data?.message) {
         setMessage(error.response.data.message);
       } else {
         setMessage(`Connection Error: ${error.message}. Is backend running?`);
@@ -91,7 +125,12 @@ const Login = () => {
       password: ''
     });
     setMessage('');
+    setAttemptsRemaining(3);
   };
+
+  if (showVerification) {
+    return <EmailVerification email={unverifiedEmail} onVerified={handleVerified} onBackToSignup={handleBackToLogin} />;
+  }
 
   if (showVerification) {
     return <EmailVerification email={unverifiedEmail} onVerified={handleVerified} onBackToSignup={handleBackToLogin} />;
@@ -129,7 +168,15 @@ const Login = () => {
 
             {message && (
               <div className={`modern-message ${messageType}`}>
-                {message}
+                {messageType === 'warning' && lockoutRemaining > 0 
+                  ? `Account locked for security. Try again in ${lockoutRemaining}s.` 
+                  : message}
+              </div>
+            )}
+
+            {attemptsRemaining < 3 && lockoutRemaining === 0 && (
+              <div className="attempts-warning">
+                ⚠️ {attemptsRemaining} attempt{attemptsRemaining !== 1 ? 's' : ''} remaining before 30-second lockout
               </div>
             )}
 
@@ -146,6 +193,7 @@ const Login = () => {
                     onChange={handleChange}
                     placeholder="Enter your email"
                     required
+                    disabled={lockoutRemaining > 0}
                   />
                 </div>
               </div>
@@ -165,12 +213,15 @@ const Login = () => {
                     onChange={handleChange}
                     placeholder="Enter your password"
                     required
+                    disabled={lockoutRemaining > 0}
                   />
                 </div>
               </div>
 
-              <button type="submit" disabled={loading} className="modern-login-btn">
-                {loading ? 'Signing in...' : (
+              <button type="submit" disabled={loading || lockoutRemaining > 0} className="modern-login-btn">
+                {lockoutRemaining > 0 
+                  ? `Locked (${lockoutRemaining}s)` 
+                  : loading ? 'Signing in...' : (
                   <>
                     Sign In <FiArrowRight className="btn-icon" />
                   </>
