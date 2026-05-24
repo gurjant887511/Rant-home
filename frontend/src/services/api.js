@@ -1,6 +1,32 @@
 ﻿import axios from 'axios';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://rant-home.onrender.com/api' : 'http://localhost:8000/api';
+// Dynamically determine API URL based on current domain
+const getAPIBaseURL = () => {
+  // Check if we're in production by looking at the current hostname
+  const hostname = window.location.hostname;
+  const protocol = window.location.protocol;
+  
+  // If on localhost or 127.0.0.1, use local backend
+  if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.')) {
+    return 'http://localhost:8000/api';
+  }
+  
+  // For production domains
+  if (hostname.includes('renthub.in')) {
+    return 'https://rant-home.onrender.com/api';
+  }
+  
+  // For Render preview/deployment URLs
+  if (hostname.includes('render.com') || hostname.includes('onrender.com')) {
+    return 'https://rant-home.onrender.com/api';
+  }
+  
+  // For Vercel or other deployments, construct from current domain's backend
+  // Assumes backend is deployed to same base domain
+  return `${protocol}//rant-home.onrender.com/api`;
+};
+
+const API_BASE_URL = getAPIBaseURL();
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

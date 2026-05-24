@@ -12,10 +12,28 @@ const authRoutes = require('./routes/authRoutes');
 const app = express();
 
 // CORS Configuration
+const defaultOrigins = [
+  'http://localhost:3000', 
+  'http://localhost:8001', 
+  'http://localhost:8000', 
+  'http://localhost:5173',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:5173'
+];
+
+// Add production domains
+const productionOrigins = [
+  'https://rant-home.onrender.com',
+  'https://renthub.in',
+  'https://www.renthub.in'
+];
+
+const corsOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : [...defaultOrigins, ...productionOrigins];
+
 const corsOptions = {
-  origin: process.env.ALLOWED_ORIGINS 
-    ? process.env.ALLOWED_ORIGINS.split(',')
-    : ['http://localhost:3000', 'http://localhost:8001', 'http://localhost:8000', 'http://localhost:5173'],
+  origin: corsOrigins,
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
