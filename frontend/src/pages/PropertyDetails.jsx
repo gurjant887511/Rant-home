@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { api } from '../services/api';
+import SEO from '../components/SEO';
 
 const PropertyDetails = () => {
   const { id } = useParams();
@@ -48,6 +49,12 @@ const PropertyDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
+      <SEO 
+        title={`${property.title} in ${property.city}`}
+        description={`Rent ${property.title} located in ${property.area}, ${property.city} for ₹${property.price}. Ideal ${property.type} for students and professionals.`}
+        url={`https://renthub.in/property/${id}`}
+        image={property.images && property.images.length > 0 ? property.images[0] : null}
+      />
       {/* Header Info */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold">{property.title}</h1>

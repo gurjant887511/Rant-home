@@ -34,6 +34,36 @@ connectDB();
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
 
+// Dynamic Sitemap Endpoint for SEO
+const Property = require('./models/Property');
+app.get('/api/sitemap.xml', async (req, res) => {
+  try {
+    const properties = await Property.find({}).select('_id updatedAt');
+    
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+    
+    // Static frontend routes
+    const staticRoutes = ['', '/listings', '/about', '/login', '/signup', '/add-property'];
+    staticRoutes.forEach(route => {
+      xml += `  <url>\n    <loc>https://renthub.in${route}</loc>\n    <changefreq>daily</changefreq>\n    <priority>${route === '' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
+    });
+
+    // Dynamic property pages
+    properties.forEach(prop => {
+      xml += `  <url>\n    <loc>https://renthub.in/property/${prop._id}</loc>\n    <lastmod>${prop.updatedAt ? prop.updatedAt.toISOString() : new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>\n`;
+    });
+
+    xml += '</urlset>';
+    
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (error) {
+    console.error('Sitemap generation error:', error);
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 // Health check route
 app.get('/api/health', (req, res) => {
   res.status(200).json({ 

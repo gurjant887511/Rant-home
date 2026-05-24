@@ -1,9 +1,15 @@
   import React from 'react';
+  import SEO from '../components/SEO';
   import './About.css';
 
   const About = () => {
     return (
       <div className="about-page">
+        <SEO 
+          title="About Us"
+          description="Learn about RentHub, the best student living platform and room rental website in India for finding affordable PGs, hostels, and flats."
+          url="https://renthub.in/about"
+        />
         <div className="about-hero">
           <div className="about-hero-content">
             <h1>About RentHub - Best Room Rental Website in India</h1>

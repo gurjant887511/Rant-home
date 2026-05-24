@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import PropertyCard from '../components/PropertyCard';
 import SearchBar from '../components/SearchBar';
+import SEO from '../components/SEO';
 import './Home.css';
 
 const Home = () => {
@@ -30,6 +31,11 @@ const Home = () => {
 
   return (
     <div className="home">
+      <SEO 
+        title="Student Room For Rent, PGs & Hostels Near You" 
+        description="Find the best and cheapest student rooms, PGs, hostels, and flats for rent in India. Verified listings for boys and girls."
+        url="https://renthub.in/"
+      />
       <div className="home-hero">
         <div className="hero-content">
           <h1>Find Your Perfect Room on RentHub</h1>

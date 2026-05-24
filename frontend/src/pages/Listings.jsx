@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import PropertyCard from '../components/PropertyCard';
 import FilterPanel from '../components/FilterPanel';
+import SEO from '../components/SEO';
 import './Listings.css';
 
 const Listings = () => {
@@ -24,12 +25,17 @@ const Listings = () => {
     }
   };
 
-  const handleFilter = (newFilters) => {
-    fetchProperties(newFilters);
+  const handleFilter = (filters) => {
+    fetchProperties(filters);
   };
 
   return (
     <div className="listings">
+      <SEO 
+        title="Browse All Properties"
+        description="Search for the best student rooms, PGs, and hostels. Filter by city, budget, and amenities to find your perfect rental home."
+        url="https://renthub.in/listings"
+      />
       <div className="listings-header">
         <h1>Student Rooms, PGs, and Hostels for Rent</h1>
         <p>Browse verified rental properties, student accommodations, and budget-friendly PG near university campuses.</p>
