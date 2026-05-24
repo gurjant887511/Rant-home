@@ -11,11 +11,12 @@
   color: #ffffff;
 }
 
-.about-hero-content h2 {
+.about-hero-content h1 {
   font-size: 42px;
   margin-bottom: 15px;
   font-weight: 700;
   text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
 }
 
 .about-hero-content p {
@@ -23,6 +24,7 @@
   max-width: 600px;
   margin: 0 auto;
   opacity: 0.9;
+  line-height: 1.5;
 }
 
 .about-container {
@@ -105,7 +107,7 @@
 /* Features section */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
 }
 
@@ -139,7 +141,7 @@
 
 .benefits-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
@@ -199,20 +201,132 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* =========================================
+   Mobile Responsiveness 
+   ========================================= */
+
+@media (max-width: 992px) {
+  .about-hero-content h1 {
+    font-size: 36px;
+  }
+  .section-title {
+    font-size: 28px;
+  }
+}
+
 @media (max-width: 768px) {
   .about-hero {
-    padding: 60px 20px;
+    padding: 60px 15px;
   }
   
-  .about-hero-content h2 {
-    font-size: 32px;
+  .about-hero-content h1 {
+    font-size: 30px;
   }
   
+  .about-hero-content p {
+    font-size: 18px;
+  }
+  
+  .about-container {
+    padding: 40px 15px;
+  }
+
+  .section-block {
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+  
+  .about-intro p {
+    font-size: 16px;
+  }
+
+  .about-intro p strong {
+    font-size: 18px;
+  }
+
   .cards-section {
     flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .info-card {
+    min-width: 100%;
+    padding: 30px 20px;
+  }
+
+  .info-card h3 {
+    font-size: 24px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .feature-item {
+    padding: 20px;
+  }
+
+  .why-choose-section {
+    padding: 25px 20px;
+  }
+
+  .benefits-list {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .benefits-list li {
+    font-size: 16px;
+    align-items: flex-start;
+  }
+
+  .benefits-list li span {
+    font-size: 20px;
+    margin-right: 12px;
+    margin-top: 2px;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+  }
+
+  .cta-highlight {
+    padding: 12px 24px;
+    font-size: 16px;
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero {
+    padding: 50px 15px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 26px;
+  }
+  
+  .about-hero-content p {
+    font-size: 16px;
   }
   
   .section-title {
-    font-size: 28px;
+    font-size: 22px;
+  }
+
+  .info-card h3 {
+    font-size: 22px;
+  }
+
+  .feature-item h4 {
+    font-size: 18px;
   }
 }
