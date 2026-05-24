@@ -18,8 +18,31 @@ const Login = () => {
   const [showVerification, setShowVerification] = useState(false);
   const [unverifiedEmail, setUnverifiedEmail] = useState('');
   const [lockoutRemaining, setLockoutRemaining] = useState(0); // Remaining lockout time in seconds
+  const [lockoutLevel, setLockoutLevel] = useState(0); // Track which level of lockout
   const [attemptsRemaining, setAttemptsRemaining] = useState(3);
   const navigate = useNavigate();
+
+  // Calculate lockout duration based on level
+  const getLockoutDuration = (level) => {
+    switch(level) {
+      case 1: return 30; // 30 seconds
+      case 2: return 120; // 2 minutes
+      case 3: return 300; // 5 minutes
+      case 4: return 900; // 15 minutes
+      default: return 30;
+    }
+  };
+
+  // Get lockout duration text
+  const getLockoutText = (level) => {
+    switch(level) {
+      case 1: return '30 seconds';
+      case 2: return '2 minutes';
+      case 3: return '5 minutes';
+      case 4: return '15 minutes';
+      default: return '30 seconds';
+    }
+  };
 
   // Countdown timer for lockout
   useEffect(() => {
@@ -71,6 +94,8 @@ const Login = () => {
           setMessageType('success');
           setMessage('Login successful! Redirecting...');
           setAttemptsRemaining(3); // Reset attempts on success
+          setLockoutRemaining(0);
+          setLockoutLevel(0);
           
           setTimeout(() => {
             navigate('/');
@@ -84,8 +109,11 @@ const Login = () => {
       // Handle account lockout (429 status)
       if (error.response?.status === 429) {
         const remainingTime = error.response?.data?.remainingTime || 30;
+        const level = error.response?.data?.lockoutLevel || 1;
+        setLockoutLevel(level);
         setLockoutRemaining(remainingTime);
-        setMessage(`Account locked for security. Try again in ${remainingTime} seconds.`);
+        const lockoutText = getLockoutText(level);
+        setMessage(`Account locked for security. Try again in ${remainingTime}s (${lockoutText} lockout).`);
         setMessageType('warning');
       }
       // Handle unverified email case
@@ -112,6 +140,9 @@ const Login = () => {
   const handleVerified = (userData) => {
     setMessage('Email verified! Redirecting to home...');
     localStorage.setItem('token', userData.token);
+    setLockoutRemaining(0);
+    setLockoutLevel(0);
+    setAttemptsRemaining(3);
     setTimeout(() => {
       navigate('/');
     }, 1500);
@@ -126,6 +157,8 @@ const Login = () => {
     });
     setMessage('');
     setAttemptsRemaining(3);
+    setLockoutRemaining(0);
+    setLockoutLevel(0);
   };
 
   if (showVerification) {
@@ -169,14 +202,14 @@ const Login = () => {
             {message && (
               <div className={`modern-message ${messageType}`}>
                 {messageType === 'warning' && lockoutRemaining > 0 
-                  ? `Account locked for security. Try again in ${lockoutRemaining}s.` 
+                  ? `Account locked (${getLockoutText(lockoutLevel)}). Try again in ${lockoutRemaining}s.` 
                   : message}
               </div>
             )}
 
             {attemptsRemaining < 3 && lockoutRemaining === 0 && (
               <div className="attempts-warning">
-                ⚠️ {attemptsRemaining} attempt{attemptsRemaining !== 1 ? 's' : ''} remaining before 30-second lockout
+                ⚠️ {attemptsRemaining} attempt{attemptsRemaining !== 1 ? 's' : ''} remaining | Next lockout: {getLockoutText(1)}
               </div>
             )}
 
@@ -220,7 +253,7 @@ const Login = () => {
 
               <button type="submit" disabled={loading || lockoutRemaining > 0} className="modern-login-btn">
                 {lockoutRemaining > 0 
-                  ? `Locked (${lockoutRemaining}s)` 
+                  ? `${getLockoutText(lockoutLevel)} (${lockoutRemaining}s)` 
                   : loading ? 'Signing in...' : (
                   <>
                     Sign In <FiArrowRight className="btn-icon" />

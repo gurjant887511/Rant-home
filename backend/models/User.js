@@ -38,6 +38,14 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: null
   },
+  lockoutLevel: {
+    type: Number,
+    default: 0  // 0: no lockout, 1: 30s, 2: 2min, 3: 5min, etc.
+  },
+  lastFailedAttemptTime: {
+    type: Date,
+    default: null
+  },
   createdAt: {
     type: Date,
     default: Date.now

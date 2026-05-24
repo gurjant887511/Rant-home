@@ -206,10 +206,18 @@ exports.loginUser = async (req, res) => {
     // Check if user is locked out
     if (user.loginLockoutUntil && user.loginLockoutUntil > new Date()) {
       const remainingTime = Math.ceil((user.loginLockoutUntil - new Date()) / 1000);
+      
+      // Determine lockout duration name
+      let lockoutDuration = '30 seconds';
+      if (user.lockoutLevel === 2) lockoutDuration = '2 minutes';
+      else if (user.lockoutLevel === 3) lockoutDuration = '5 minutes';
+      else if (user.lockoutLevel >= 4) lockoutDuration = '15 minutes';
+      
       return res.status(429).json({ 
         success: false, 
-        message: `Too many failed attempts. Please try again in ${remainingTime} seconds.`,
-        remainingTime
+        message: `Too many failed attempts. Account locked for ${lockoutDuration}. Try again in ${remainingTime} seconds.`,
+        remainingTime,
+        lockoutLevel: user.lockoutLevel
       });
     }
 
@@ -219,15 +227,40 @@ exports.loginUser = async (req, res) => {
     if (!isPasswordCorrect) {
       // Increment failed attempts
       user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
+      user.lastFailedAttemptTime = new Date();
 
-      // If 3 failed attempts, lock the account for 30 seconds
+      // If 3 failed attempts, lock the account based on lockout level
       if (user.failedLoginAttempts >= 3) {
-        user.loginLockoutUntil = new Date(Date.now() + 30 * 1000); // 30 seconds lockout
+        // Calculate lockout duration based on level
+        let lockoutDurationMs = 30 * 1000; // Level 1: 30 seconds
+        let nextLevel = (user.lockoutLevel || 0) + 1;
+        
+        if (nextLevel === 2) {
+          lockoutDurationMs = 2 * 60 * 1000; // Level 2: 2 minutes
+        } else if (nextLevel === 3) {
+          lockoutDurationMs = 5 * 60 * 1000; // Level 3: 5 minutes
+        } else if (nextLevel >= 4) {
+          lockoutDurationMs = 15 * 60 * 1000; // Level 4+: 15 minutes
+        }
+
+        user.loginLockoutUntil = new Date(Date.now() + lockoutDurationMs);
+        user.lockoutLevel = nextLevel;
+        user.failedLoginAttempts = 0; // Reset attempt counter for next cycle
+
         await user.save();
+
+        const remainingSeconds = Math.ceil(lockoutDurationMs / 1000);
+        let lockoutMessage = `Too many failed attempts. Account locked for ${remainingSeconds} seconds.`;
+        
+        if (nextLevel === 2) lockoutMessage = `Too many failed attempts. Account locked for 2 minutes.`;
+        else if (nextLevel === 3) lockoutMessage = `Too many failed attempts. Account locked for 5 minutes.`;
+        else if (nextLevel >= 4) lockoutMessage = `Too many failed attempts. Account locked for 15 minutes.`;
+
         return res.status(429).json({ 
           success: false, 
-          message: 'Too many failed attempts. Account locked for 30 seconds.',
-          remainingTime: 30
+          message: lockoutMessage,
+          remainingTime: remainingSeconds,
+          lockoutLevel: nextLevel
         });
       }
 
@@ -236,17 +269,20 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ 
         success: false, 
         message: `Invalid credentials. ${attemptsRemaining} attempt${attemptsRemaining !== 1 ? 's' : ''} remaining before lockout.`,
-        attemptsRemaining
+        attemptsRemaining,
+        failedAttempts: user.failedLoginAttempts
       });
     }
 
-    // Reset failed attempts on successful login
+    // Reset failed attempts and lockout on successful login
     user.failedLoginAttempts = 0;
     user.loginLockoutUntil = null;
+    user.lockoutLevel = 0;
+    user.lastFailedAttemptTime = null;
 
     // Check if email is verified
     if (!user.isEmailVerified) {
-      await user.save(); // Save the reset failed attempts
+      await user.save(); // Save the reset fields
       return res.status(403).json({ 
         success: false, 
         message: 'Please verify your email first',
@@ -256,7 +292,7 @@ exports.loginUser = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '30d' });
 
-    await user.save(); // Save the reset failed attempts
+    await user.save(); // Save the reset fields
 
     res.status(200).json({ 
       success: true, 
