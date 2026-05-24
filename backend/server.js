@@ -28,12 +28,39 @@ const productionOrigins = [
   'https://www.renthub.in'
 ];
 
-const corsOrigins = process.env.ALLOWED_ORIGINS 
+// Parse ALLOWED_ORIGINS from environment
+const envOrigins = process.env.ALLOWED_ORIGINS 
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
-  : [...defaultOrigins, ...productionOrigins];
+  : [];
 
+// Combine all origins
+const allOrigins = [...defaultOrigins, ...productionOrigins, ...envOrigins];
+
+// Custom origin function to allow wildcard Render URLs
 const corsOptions = {
-  origin: corsOrigins,
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    // Check if origin is in the list
+    if (allOrigins.includes(origin)) {
+      callback(null, true);
+    } 
+    // Allow any Render deployment URLs (preview URLs)
+    else if (origin.includes('.onrender.com') || origin.includes('onrender.app')) {
+      callback(null, true);
+    }
+    // Allow any Vercel deployment
+    else if (origin.includes('.vercel.app')) {
+      callback(null, true);
+    }
+    // Reject others
+    else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
