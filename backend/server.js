@@ -8,6 +8,7 @@ dotenv.config();
 const connectDB = require('./config/db');
 const propertyRoutes = require('./routes/propertyRoutes');
 const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
@@ -85,6 +86,7 @@ connectDB();
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Dynamic Sitemap Endpoint for SEO
 const Property = require('./models/Property');

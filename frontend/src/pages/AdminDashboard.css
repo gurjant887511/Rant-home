@@ -1,0 +1,299 @@
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f7fafc;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.admin-header {
+  margin-bottom: 40px;
+}
+
+.admin-header h1 {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin: 0 0 10px 0;
+}
+
+.admin-header p {
+  color: #718096;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Statistics Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s;
+  border-left: 4px solid;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.users {
+  border-left-color: #667eea;
+}
+
+.stat-card.properties {
+  border-left-color: #f6ad55;
+}
+
+.stat-card.verified {
+  border-left-color: #48bb78;
+}
+
+.stat-card.unverified {
+  border-left-color: #ed8936;
+}
+
+.stat-icon {
+  font-size: 3rem;
+  min-width: 80px;
+  text-align: center;
+}
+
+.stat-info h3 {
+  font-size: 0.9rem;
+  color: #718096;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+}
+
+.stat-subtitle {
+  font-size: 0.85rem;
+  color: #a0aec0;
+  margin: 4px 0 0 0;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section h2 {
+  font-size: 1.3rem;
+  color: #2d3748;
+  margin: 0 0 20px 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+.view-all {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.view-all:hover {
+  color: #764ba2;
+}
+
+/* City List */
+.city-list,
+.type-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.city-item,
+.type-item {
+  background: #f7fafc;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s;
+}
+
+.city-item:hover,
+.type-item:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.city-name,
+.type-name {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.95rem;
+}
+
+.city-count,
+.type-count {
+  background: #667eea;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Recent Items */
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f7fafc;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+  transition: all 0.3s;
+}
+
+.recent-item:hover {
+  background: #edf2f7;
+  padding-left: 20px;
+}
+
+.recent-info {
+  flex: 1;
+}
+
+.recent-name {
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+}
+
+.recent-email {
+  color: #718096;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.recent-status {
+  display: flex;
+  gap: 10px;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge.verified {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.badge.unverified {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.badge.type {
+  background: #bee3f8;
+  color: #2c5282;
+}
+
+/* Loading and Error States */
+.loading,
+.error-message {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 1.1rem;
+  background: white;
+  border-radius: 12px;
+}
+
+.loading {
+  color: #667eea;
+}
+
+.error-message {
+  background: #fed7d7;
+  border: 1px solid #fc8181;
+  color: #742a2a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-content {
+    padding: 20px;
+  }
+
+  .admin-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .city-list,
+  .type-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recent-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .recent-status {
+    width: 100%;
+  }
+}

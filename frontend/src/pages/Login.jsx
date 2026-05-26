@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { api } from '../services/api';
 import { FiMail, FiLock, FiArrowRight, FiHome } from 'react-icons/fi';
 import EmailVerification from '../components/EmailVerification';
 import './Login.css';
@@ -72,19 +72,14 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Safe API URL check
-    const apiUrl = process.env.NODE_ENV === 'production' ? 'https://rant-home.onrender.com/api' : 'http://localhost:8000/api';
 
     try {
       setLoading(true);
       setMessage('');
       setMessageType('');
       
-      console.log('Sending login request to API:', apiUrl);
-
       if (formData.email && formData.password) {
-        const response = await axios.post(`${apiUrl}/auth/login`, {
+        const response = await api.login({
           email: formData.email,
           password: formData.password
         });

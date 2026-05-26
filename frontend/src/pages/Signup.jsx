@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { api } from '../services/api';
 import EmailVerification from '../components/EmailVerification';
 import './Signup.css';
 
@@ -34,16 +34,11 @@ const Signup = () => {
       return;
     }
 
-    // Safe API URL check for both Create React App and Vite
-    const apiUrl = process.env.NODE_ENV === 'production' ? 'https://rant-home.onrender.com/api' : 'http://localhost:8000/api';
-
     try {
       setLoading(true);
       setMessage('');
 
-      console.log('Sending request to API:', apiUrl);
-
-      const response = await axios.post(`${apiUrl}/auth/register`, {
+      const response = await api.register({
         name: formData.name,
         email: formData.email,
         password: formData.password
@@ -58,8 +53,7 @@ const Signup = () => {
       if (error.response?.data?.message) {
         setMessage(error.response.data.message);
       } else {
-        // Agar server connect nahi hua toh exact network error show karega
-        setMessage(`Connection Error: Failed to connect to "${apiUrl}". Make sure backend is running here!`);
+        setMessage(`Connection Error: Failed to connect to the backend. Please try again later.`);
       }
     } finally {
       setLoading(false);

@@ -1,22 +1,21 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import Home from './pages/Home';
+import About from './pages/About';
 import Listings from './pages/Listings';
 import PropertyDetails from './pages/PropertyDetails';
 import AddProperty from './pages/AddProperty';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import About from './pages/About';
 import { startHealthCheck, stopHealthCheck } from './services/healthCheck';
 import './App.css';
 
 function App() {
   useEffect(() => {
-    // Start health checks to keep backend alive
+    // Start health checks to keep Render backend alive
     startHealthCheck();
-
+    
     // Cleanup on unmount
     return () => {
       stopHealthCheck();
@@ -35,7 +34,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-      <Footer />
     </Router>
   );
 }

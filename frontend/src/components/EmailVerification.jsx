@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { api } from '../services/api';
 import './EmailVerification.css';
 
 const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
@@ -8,8 +8,6 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [codeSent, setCodeSent] = useState(true);
-
-  const apiUrl = process.env.NODE_ENV === 'production' ? 'https://rant-home.onrender.com/api' : 'http://localhost:8000/api';
 
   const handleVerify = async (e) => {
     e.preventDefault();
@@ -23,7 +21,7 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
       setLoading(true);
       setMessage('');
 
-      const response = await axios.post(`${apiUrl}/auth/verify-email`, {
+      const response = await api.verifyEmail({
         email,
         code
       });
@@ -52,7 +50,7 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
       setResendLoading(true);
       setMessage('');
 
-      const response = await axios.post(`${apiUrl}/auth/resend-verification-code`, {
+      const response = await api.resendVerificationCode({
         email
       });
 

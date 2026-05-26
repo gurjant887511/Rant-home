@@ -94,7 +94,13 @@ export const api = {
   searchProperties: (filters) => apiClient.get('/properties', { params: filters }),
 
   // Reviews
-  addPropertyReview: (id, reviewData) => apiClient.post(`/properties/${id}/reviews`, reviewData)
+  addPropertyReview: (id, reviewData) => apiClient.post(`/properties/${id}/reviews`, reviewData),
+
+  // Auth
+  register: (userData) => apiClient.post('/auth/register', userData),
+  login: (credentials) => apiClient.post('/auth/login', credentials),
+  verifyEmail: (data) => apiClient.post('/auth/verify-email', data),
+  resendVerificationCode: (data) => apiClient.post('/auth/resend-verification-code', data)
 };
 
 export default apiClient;
