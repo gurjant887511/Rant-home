@@ -11,25 +11,23 @@ const getAPIBaseURL = () => {
     return 'http://localhost:8000/api';
   }
   
-  // For production domains
-  if (hostname.includes('renthub.in')) {
-    return 'https://rant-home.onrender.com/api';
-  }
-  
-  // For Render preview/deployment URLs
-  if (hostname.includes('render.com') || hostname.includes('onrender.com')) {
-    return 'https://rant-home.onrender.com/api';
-  }
-  
-  // For Vercel or other deployments, construct from current domain's backend
-  // Assumes backend is deployed to same base domain
-  return `${protocol}//rant-home.onrender.com/api`;
+  // For all production deployments, use Render backend
+  return 'https://rant-home.onrender.com/api';
 };
 
 const API_BASE_URL = getAPIBaseURL();
 
+// Retry configuration for handling Render cold starts
+const retryConfig = {
+  maxRetries: 3,
+  retryDelay: 1000, // Start with 1 second
+  retryableStatuses: [408, 500, 502, 503, 504],
+  timeout: 15000 // 15 second timeout for Render cold start
+};
+
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
+  timeout: retryConfig.timeout,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -43,6 +41,46 @@ apiClient.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Retry interceptor for handling failed requests
+apiClient.interceptors.response.use(
+  response => response,
+  async error => {
+    const config = error.config;
+    
+    // Don't retry if no config or already retried
+    if (!config || !config.url) {
+      return Promise.reject(error);
+    }
+    
+    // Initialize retry count
+    if (!config.retryCount) {
+      config.retryCount = 0;
+    }
+    
+    const shouldRetry = 
+      config.retryCount < retryConfig.maxRetries &&
+      (retryConfig.retryableStatuses.includes(error.response?.status) ||
+       error.code === 'ECONNABORTED' ||
+       error.code === 'ECONNREFUSED' ||
+       error.message === 'Network Error');
+    
+    if (shouldRetry) {
+      config.retryCount++;
+      const delay = retryConfig.retryDelay * Math.pow(2, config.retryCount - 1);
+      console.warn(`🔄 Retrying request (${config.retryCount}/${retryConfig.maxRetries}) after ${delay}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      return apiClient(config);
+    }
+    
+    // If all retries failed, provide better error message
+    if (error.response?.status === 503 || error.code === 'ECONNREFUSED') {
+      error.message = 'Backend server is temporarily unavailable. Please try again in a few moments.';
+    }
+    
+    return Promise.reject(error);
+  }
+);
 
 export const api = {
   // Properties

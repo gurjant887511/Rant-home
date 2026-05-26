@@ -46,25 +46,32 @@ const corsOptions = {
     
     // Check if origin is in the list
     if (allOrigins.includes(origin)) {
-      callback(null, true);
+      return callback(null, true);
     } 
     // Allow any Render deployment URLs (preview URLs)
-    else if (origin.includes('.onrender.com') || origin.includes('onrender.app')) {
-      callback(null, true);
+    if (origin.includes('.onrender.com') || origin.includes('onrender.app')) {
+      return callback(null, true);
     }
     // Allow any Vercel deployment
-    else if (origin.includes('.vercel.app')) {
-      callback(null, true);
+    if (origin.includes('.vercel.app')) {
+      return callback(null, true);
+    }
+    // Allow netlify
+    if (origin.includes('.netlify.app')) {
+      return callback(null, true);
+    }
+    // Allow any localhost variations
+    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      return callback(null, true);
     }
     // Reject others
-    else {
-      callback(new Error('Not allowed by CORS'));
-    }
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   optionsSuccessStatus: 200,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  maxAge: 86400
 };
 
 // Middleware

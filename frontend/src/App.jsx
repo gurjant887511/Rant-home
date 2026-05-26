@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -9,9 +9,20 @@ import AddProperty from './pages/AddProperty';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import About from './pages/About';
+import { startHealthCheck, stopHealthCheck } from './services/healthCheck';
 import './App.css';
 
 function App() {
+  useEffect(() => {
+    // Start health checks to keep backend alive
+    startHealthCheck();
+
+    // Cleanup on unmount
+    return () => {
+      stopHealthCheck();
+    };
+  }, []);
+
   return (
     <Router>
       <Navbar />

@@ -8,6 +8,7 @@ import './Listings.css';
 const Listings = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchProperties();
@@ -16,10 +17,19 @@ const Listings = () => {
   const fetchProperties = async (appliedFilters = {}) => {
     try {
       setLoading(true);
+      setError(null);
       const response = await api.getAllProperties(appliedFilters);
       setProperties(response.data.data);
     } catch (error) {
       console.error('Error fetching properties:', error);
+      setError(
+        error.message === 'Network Error' || 
+        error.code === 'ECONNREFUSED' ||
+        error.message.includes('temporarily unavailable')
+          ? 'Backend server is temporarily unavailable. Please try again in a few moments.'
+          : 'Failed to load properties. Please try again.'
+      );
+      setProperties([]);
     } finally {
       setLoading(false);
     }
@@ -48,7 +58,19 @@ const Listings = () => {
 
         <main className="listings-main">
           {loading ? (
-            <div className="loading">Loading properties...</div>
+            <div className="loading">⏳ Loading properties...</div>
+          ) : error ? (
+            <div className="error-message" style={{
+              backgroundColor: '#fee2e2',
+              border: '1px solid #fca5a5',
+              color: '#991b1b',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              marginBottom: '1rem'
+            }}>
+              <p><strong>⚠️ {error}</strong></p>
+              <p style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>If this persists, please refresh the page or try again later.</p>
+            </div>
           ) : properties.length > 0 ? (
             <div className="properties-grid">
               {properties.map((property) => (
