@@ -1,17 +1,21 @@
 ﻿import axios from 'axios';
 
-// Dynamically determine API URL based on current domain
+// Get API base URL from environment variable (if set during build), or auto-detect
 const getAPIBaseURL = () => {
-  // Check if we're in production by looking at the current hostname
-  const hostname = window.location.hostname;
-  const protocol = window.location.protocol;
-  
-  // If on localhost or 127.0.0.1, use local backend
-  if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.')) {
-    return 'http://localhost:8000/api';
+  // Priority 1: Environment variable (works in both CRA and Vite)
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
   }
-  
-  // For all production deployments, use Render backend
+  if (typeof window !== 'undefined') {
+    // Priority 2: Check if we're in development mode
+    // In CRA, process.env.NODE_ENV is replaced at build time
+    if (process.env.NODE_ENV === 'development') {
+      return 'http://localhost:8000/api';
+    }
+    // Priority 3: For all production deployments, use Render backend
+    return 'https://rant-home.onrender.com/api';
+  }
+  // Fallback
   return 'https://rant-home.onrender.com/api';
 };
 
