@@ -82,6 +82,11 @@ apiClient.interceptors.response.use(
       error.message = 'Backend server is temporarily unavailable. Please try again in a few moments.';
     }
     
+    // Preserve the original server response message so UI can show it
+    if (error.response?.data?.message && !error.message.includes('temporarily unavailable')) {
+      error.serverMessage = error.response.data.message;
+    }
+    
     return Promise.reject(error);
   }
 );

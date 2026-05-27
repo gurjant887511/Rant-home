@@ -50,10 +50,14 @@ const Signup = () => {
       }
     } catch (error) {
       console.error('Signup Error:', error);
-      if (error.response?.data?.message) {
-        setMessage(error.response.data.message);
+      // Try to get the server's error message from multiple places
+      const serverMessage = error.response?.data?.message || error.serverMessage;
+      if (serverMessage) {
+        setMessage(serverMessage);
+      } else if (error.message === 'Network Error' || error.code === 'ECONNREFUSED' || error.code === 'ECONNABORTED') {
+        setMessage('Connection Error: Unable to reach the server. The backend might be starting up (takes 30-60s). Please wait a moment and try again.');
       } else {
-        setMessage(`Connection Error: Failed to connect to the backend. Please try again later.`);
+        setMessage(`Error: ${error.message || 'Something went wrong. Please try again.'}`);
       }
     } finally {
       setLoading(false);

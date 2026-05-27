@@ -124,8 +124,15 @@ const Login = () => {
       }
       else if (error.response?.data?.message) {
         setMessage(error.response.data.message);
-      } else {
-        setMessage(`Connection Error: ${error.message}. Is backend running?`);
+      } 
+      else if (error.response?.data?.error) {
+        setMessage(error.response.data.error);
+      }
+      else if (error.message === 'Network Error' || error.code === 'ECONNREFUSED' || error.code === 'ECONNABORTED') {
+        setMessage('Connection Error: Unable to reach the server. The backend might be starting up (takes 30-60s). Please wait a moment and try again.');
+      }
+      else {
+        setMessage(`Error: ${error.message || 'Something went wrong. Please try again.'}`);
       }
     } finally {
       setLoading(false);
@@ -155,10 +162,6 @@ const Login = () => {
     setLockoutRemaining(0);
     setLockoutLevel(0);
   };
-
-  if (showVerification) {
-    return <EmailVerification email={unverifiedEmail} onVerified={handleVerified} onBackToSignup={handleBackToLogin} />;
-  }
 
   if (showVerification) {
     return <EmailVerification email={unverifiedEmail} onVerified={handleVerified} onBackToSignup={handleBackToLogin} />;
