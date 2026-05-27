@@ -42,8 +42,11 @@ const Signup = () => {
         name: formData.name,
         email: formData.email,
         password: formData.password
+
       });
 
+
+      
       if (response.data.success) {
         setRegisteredEmail(formData.email);
         setShowVerification(true);
