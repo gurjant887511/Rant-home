@@ -8,6 +8,11 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [codeSent, setCodeSent] = useState(true);
+  const [displayCode, setDisplayCode] = useState(''); // Shown when email delivery fails
+  const [emailFailed, setEmailFailed] = useState(
+    // Check if parent indicated email wasn't sent (passed via location state)
+    window.history?.state?.usr?.emailSent === false
+  );
 
   const handleVerify = async (e) => {
     e.preventDefault();
@@ -55,9 +60,18 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
       });
 
       if (response.data.success) {
-        setMessage('Verification code sent to your email!');
+        // If email failed, the code might be returned inline
+        const inlineCode = response.data?.data?.code;
+        if (inlineCode) {
+          setCode(inlineCode);
+          setDisplayCode(inlineCode);
+          setMessage(`⚠️ Email delivery failed. Your verification code is: ${inlineCode}`);
+          setEmailFailed(true);
+        } else {
+          setMessage('Verification code sent to your email!');
+          setCode('');
+        }
         setCodeSent(true);
-        setCode('');
       }
     } catch (error) {
       console.error('Resend Error:', error);
@@ -76,7 +90,20 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
       <div className="verification-container">
         <div className="verification-box">
           <h1>Verify Your Email</h1>
-          <p>We've sent a 6-digit code to <strong>{email}</strong></p>
+          {!emailFailed ? (
+            <p>We've sent a 6-digit code to <strong>{email}</strong></p>
+          ) : (
+            <p className="email-failed-warning">
+              ⚠️ Email delivery failed. Please use the code shown below to verify.
+            </p>
+          )}
+
+          {displayCode && (
+            <div className="inline-code-display">
+              <p>Your verification code:</p>
+              <div className="code-block">{displayCode}</div>
+            </div>
+          )}
 
           {message && (
             <div className={`message ${message.includes('successfully') ? 'success' : 'error'}`}>

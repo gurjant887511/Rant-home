@@ -22,7 +22,13 @@ exports.registerUser = async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email: email.toLowerCase() });
     if (existingUser) {
-      return res.status(400).json({ success: false, message: 'User already exists with this email' });
+      // If user exists but email not verified, allow re-registration
+      if (!existingUser.isEmailVerified) {
+        await User.deleteOne({ _id: existingUser._id });
+        console.log('🗑️ Deleted unverified user to allow re-registration:', existingUser._id);
+      } else {
+        return res.status(400).json({ success: false, message: 'User already exists with this email' });
+      }
     }
 
     // Generate verification code
@@ -41,27 +47,31 @@ exports.registerUser = async (req, res) => {
 
     console.log('✅ User created:', user._id);
 
-    // Send verification email
-    const emailResult = await sendVerificationEmail(email, verificationCode, name);
-    
-    if (!emailResult.success) {
-      console.warn('⚠️ Email send failed:', emailResult.error);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'User created but failed to send verification email. Please check your email configuration.',
-        error: emailResult.error 
-      });
+    // Send verification email (best effort - don't fail registration if email fails)
+    let emailSent = false;
+    try {
+      const emailResult = await sendVerificationEmail(email, verificationCode, name);
+      emailSent = emailResult.success;
+      if (!emailSent) {
+        console.warn('⚠️ Email send failed but user was created:', emailResult.error);
+      }
+    } catch (emailError) {
+      console.warn('⚠️ Email send threw exception but user was created:', emailError.message);
     }
 
+    // Always return success for user creation - email is best effort
     res.status(201).json({
       success: true,
-      message: 'User registered successfully. Please check your email to verify your account.',
+      message: emailSent 
+        ? 'User registered successfully. Please check your email to verify your account.'
+        : 'Account created. Could not send verification email. Try using "Resend Code" after signing in.',
       data: {
         _id: user._id,
         name: user.name,
         email: user.email,
         isEmailVerified: user.isEmailVerified,
-        requiresEmailVerification: true
+        requiresEmailVerification: true,
+        emailSent: emailSent
       }
     });
   } catch (error) {
@@ -167,14 +177,20 @@ exports.resendVerificationCode = async (req, res) => {
     user.emailVerificationCodeExpiry = codeExpiry;
     await user.save();
 
-    // Send verification email
-    const emailResult = await sendVerificationEmail(email, verificationCode, user.name);
-    
-    if (!emailResult.success) {
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Failed to resend verification email',
-        error: emailResult.error 
+    // Send verification email (best effort)
+    let emailSent = false;
+    try {
+      const emailResult = await sendVerificationEmail(email, verificationCode, user.name);
+      emailSent = emailResult.success;
+    } catch (emailError) {
+      console.warn('⚠️ Resend email failed:', emailError.message);
+    }
+
+    if (!emailSent) {
+      return res.status(200).json({
+        success: true,
+        message: 'Verification code generated. However, email delivery failed. Your verification code is: ' + verificationCode,
+        data: { code: verificationCode }
       });
     }
 

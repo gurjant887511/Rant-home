@@ -23,10 +23,10 @@ const API_BASE_URL = getAPIBaseURL();
 
 // Retry configuration for handling Render cold starts
 const retryConfig = {
-  maxRetries: 3,
+  maxRetries: 2,
   retryDelay: 1000, // Start with 1 second
-  retryableStatuses: [408, 500, 502, 503, 504],
-  timeout: 15000 // 15 second timeout for Render cold start
+  retryableStatuses: [408, 502, 503, 504], // Only retry server errors, NOT 500 or 4xx
+  timeout: 60000 // 60 second timeout for Render cold start (takes 30-60s)
 };
 
 const apiClient = axios.create({

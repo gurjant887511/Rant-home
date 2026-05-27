@@ -42,17 +42,20 @@ const Signup = () => {
         name: formData.name,
         email: formData.email,
         password: formData.password
-
       });
-
-
       
       if (response.data.success) {
         setRegisteredEmail(formData.email);
+        // If email wasn't sent, show a notification but still go to verification
+        if (response.data.data && response.data.data.emailSent === false) {
+          setMessage('Account created! Email delivery failed. You can still verify using the code below.');
+        } else if (response.data.message && response.data.message.includes('Could not send')) {
+          setMessage(response.data.message);
+        }
         setShowVerification(true);
       }
     } catch (error) {
-      console.error('Signup Error:', error);
+      console.error('Signup Error:', error.response?.data || error.message);
       // Try to get the server's error message from multiple places
       const serverMessage = error.response?.data?.message || error.serverMessage;
       if (serverMessage) {

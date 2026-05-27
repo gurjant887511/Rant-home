@@ -144,6 +144,43 @@
   cursor: not-allowed;
 }
 
+.inline-code-display {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.inline-code-display p {
+  color: #856404;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.code-block {
+  font-family: 'Courier New', monospace;
+  font-size: 32px;
+  font-weight: bold;
+  color: #e65100;
+  letter-spacing: 6px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 6px;
+  border: 1px dashed #ff9800;
+  user-select: all;
+}
+
+.email-failed-warning {
+  background-color: #fff3cd;
+  color: #856404 !important;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
 .verification-info {
   text-align: center;
   color: #999;
