@@ -14,6 +14,7 @@ const EmailVerification = ({ email, onVerified, onBackToSignup }) => {
     window.history?.state?.usr?.emailSent === false
   );
 
+  
   const handleVerify = async (e) => {
     e.preventDefault();
     
