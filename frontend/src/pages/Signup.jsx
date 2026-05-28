@@ -44,7 +44,6 @@ const Signup = () => {
         password: formData.password
       });
       
-      
       if (response.data.success) {
         setRegisteredEmail(formData.email);
         // If email wasn't sent, show a notification but still go to verification
