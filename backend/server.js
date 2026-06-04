@@ -25,8 +25,8 @@ const defaultOrigins = [
 // Add production domains
 const productionOrigins = [
   'https://rant-home.onrender.com',
-  'https://renthub.in',
-  'https://www.renthub.in'
+  'https://renthub.online',
+  'https://www.renthub.online'
 ];
 
 // Parse ALLOWED_ORIGINS from environment
@@ -100,12 +100,12 @@ app.get('/api/sitemap.xml', async (req, res) => {
     // Static frontend routes
     const staticRoutes = ['', '/listings', '/about', '/login', '/signup', '/add-property'];
     staticRoutes.forEach(route => {
-      xml += `  <url>\n    <loc>https://renthub.in${route}</loc>\n    <changefreq>daily</changefreq>\n    <priority>${route === '' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
+      xml += `  <url>\n    <loc>https://renthub.online${route}</loc>\n    <changefreq>daily</changefreq>\n    <priority>${route === '' ? '1.0' : '0.8'}</priority>\n  </url>\n`;
     });
 
     // Dynamic property pages
     properties.forEach(prop => {
-      xml += `  <url>\n    <loc>https://renthub.in/property/${prop._id}</loc>\n    <lastmod>${prop.updatedAt ? prop.updatedAt.toISOString() : new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>\n`;
+      xml += `  <url>\n    <loc>https://renthub.online/property/${prop._id}</loc>\n    <lastmod>${prop.updatedAt ? prop.updatedAt.toISOString() : new Date().toISOString()}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>\n`;
     });
 
     xml += '</urlset>';

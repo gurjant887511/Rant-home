@@ -29,6 +29,9 @@ const retryConfig = {
   timeout: 60000 // 60 second timeout for Render cold start (takes 30-60s)
 };
 
+
+
+
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   timeout: retryConfig.timeout,

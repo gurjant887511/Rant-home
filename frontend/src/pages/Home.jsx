@@ -44,7 +44,7 @@ const Home = () => {
       <SEO 
         title="Student Room For Rent, PGs & Hostels Near You" 
         description="Find the best and cheapest student rooms, PGs, hostels, and flats for rent in India. Verified listings for boys and girls."
-        url="https://renthub.in/"
+        url="https://renthub.online/"
       />
       <div className="home-hero">
         <div className="hero-content">

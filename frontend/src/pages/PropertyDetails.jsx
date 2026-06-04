@@ -52,7 +52,7 @@ const PropertyDetails = () => {
       <SEO 
         title={`${property.title} in ${property.city}`}
         description={`Rent ${property.title} located in ${property.area}, ${property.city} for ₹${property.price}. Ideal ${property.type} for students and professionals.`}
-        url={`https://renthub.in/property/${id}`}
+        url={`https://renthub.online/property/${id}`}
         image={property.images && property.images.length > 0 ? property.images[0] : null}
       />
       {/* Header Info */}

@@ -44,7 +44,7 @@ const Listings = () => {
       <SEO 
         title="Browse All Properties"
         description="Search for the best student rooms, PGs, and hostels. Filter by city, budget, and amenities to find your perfect rental home."
-        url="https://renthub.in/listings"
+        url="https://renthub.online/listings"
       />
       <div className="listings-header">
         <h1>Student Rooms, PGs, and Hostels for Rent</h1>

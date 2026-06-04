@@ -8,7 +8,7 @@
         <SEO 
           title="About Us"
           description="Learn about RentHub, the best student living platform and room rental website in India for finding affordable PGs, hostels, and flats."
-          url="https://renthub.in/about"
+          url="https://renthub.online/about"
         />
         <div className="about-hero">
           <div className="about-hero-content">

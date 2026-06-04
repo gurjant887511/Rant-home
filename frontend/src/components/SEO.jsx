@@ -8,7 +8,7 @@ const SEO = ({ title, description, keywords, url, image }) => {
   const defaultDescription = description || 'RentHub (Rant Home) - Best platform for student room rent in India. Find cheap student rooms, PG for girls and boys, hostels near college, and single rooms for rent.';
   const defaultKeywords = keywords || 'renthub, rent home, room rent, student room for rent, PG for students, cheap rooms for students';
   const defaultImage = image || 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1950&q=80';
-  const currentUrl = url || 'https://renthub.in/';
+  const currentUrl = url || 'https://renthub.online/';
 
   return (
     <Helmet>
