@@ -39,7 +39,7 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>Ã—</button>
+        <button className="modal-close" onClick={onClose}>—</button>
 
         <div className="modal-body">
           {/* Images Section */}
@@ -58,8 +58,8 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
 
             {images && images.length > 1 && (
               <>
-                <button className="modal-nav-btn prev" onClick={prevImage}>â®</button>
-                <button className="modal-nav-btn next" onClick={nextImage}>â¯</button>
+                <button className="modal-nav-btn prev" onClick={prevImage}> <i className="fas fa-chevron-left"></i></button>
+                <button className="modal-nav-btn next" onClick={nextImage}>  <i className="fas fa-chevron-right"></i></button>
               </>
             )}
 
@@ -89,7 +89,7 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
             </div>
 
             <div className="modal-price">
-              â‚¹ {price.toLocaleString()}/month
+              {price.toLocaleString()}/month
             </div>
 
             <div className="modal-info-grid">
@@ -107,7 +107,7 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
               </div>
               <div className="info-item">
                 <label>Price</label>
-                <p>â‚¹ {price.toLocaleString()}/month</p>
+                <p> {price.toLocaleString()}/month</p>
               </div>
             </div>
 
@@ -152,7 +152,7 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
                     <label>Phone</label>
                     <p>
                       <a href={`tel:${phone}`} className="phone-link">
-                        ðŸ“ž {phone}
+                         {phone}
                       </a>
                     </p>
                   </div>
@@ -162,7 +162,7 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
                     <label>WhatsApp</label>
                     <p>
                       <a href={`https://wa.me/${whatsAppPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="whatsapp-link">
-                        ðŸ’¬ {whatsAppPhone}
+                         {whatsAppPhone}
                       </a>
                     </p>
                   </div>
@@ -185,12 +185,12 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
         <div className="modal-footer">
           {phone && (
             <a href={`tel:${phone}`} className="modal-btn contact-btn">
-              ðŸ“ž Call Owner
+              Call Owner
             </a>
           )}
           {whatsAppPhone && (
             <a href={`https://wa.me/${whatsAppPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="modal-btn whatsapp-btn">
-              ðŸ’¬ WhatsApp
+               WhatsApp
             </a>
           )}
           <button className="modal-btn close-btn" onClick={onClose}>
