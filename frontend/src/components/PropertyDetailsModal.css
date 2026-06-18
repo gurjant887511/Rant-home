@@ -13,6 +13,29 @@
   animation: fadeIn 0.3s ease;
 }
 
+
+
+.modal-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 1000;
+}
+
+.prev {
+  left: 20px;
+}
+
+.next {
+  right: 20px;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -299,19 +322,11 @@
   text-transform: uppercase;
 }
 
-[data-theme="dark"] .modal-badge {
-  background: #7c5cff;
-}
-
 .modal-price {
   font-size: 24px;
   font-weight: 700;
-  color: #2ecc71;
+  color: var(--primary);
   margin-bottom: 10px;
-}
-
-[data-theme="dark"] .modal-price {
-  color: #4faafe;
 }
 
 .modal-info-grid {
@@ -403,6 +418,7 @@
 
 .modal-owner-section,
 .modal-location-section {
+  border: 1px solid var(--primary);
   padding: 15px;
   background: var(--bg);
   border-radius: 8px;
@@ -465,14 +481,13 @@
   display: flex;
   gap: 10px;
   padding: 20px 30px;
-  border-top: 1px solid;
-  border-top-color: #f0f0f0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   background: var(--bg);
   flex-wrap: wrap;
 }
 
 [data-theme="dark"] .modal-footer {
-  border-top-color: #2a3540;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-btn {
@@ -549,105 +564,5 @@
     min-width: unset;
     padding: 12px 15px;
     font-size: 13px;
-  }
-}
-
-.close-btn {
-  background: var(--muted);
-  color: white;
-}
-
-.close-btn:hover {
-  background: var(--text);
-  opacity: 0.9;
-}
-
-.whatsapp-btn {
-  background: #25d366;
-  color: white;
-}
-
-.whatsapp-btn:hover {
-  background: #20ba5a;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .modal-body {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 20px;
-  }
-
-  .modal-main-image {
-    height: 300px;
-  }
-
-  .modal-title {
-    font-size: 22px;
-  }
-
-  .modal-info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-footer {
-    flex-direction: column;
-  }
-
-  .modal-btn {
-    width: 100%;
-  }
-
-  .modal-nav-btn {
-    padding: 10px 14px;
-    font-size: 18px;
-  }
-
-  .modal-close {
-    width: 36px;
-    height: 36px;
-    font-size: 28px;
-  }
-}
-
-@media (max-width: 480px) {
-  .modal-content {
-    max-width: 100%;
-    border-radius: 8px;
-  }
-
-  .modal-body {
-    padding: 15px;
-    gap: 15px;
-  }
-
-  .modal-main-image {
-    height: 250px;
-  }
-
-  .modal-title {
-    font-size: 20px;
-  }
-
-  .modal-price {
-    font-size: 20px;
-  }
-
-  .modal-footer {
-    padding: 15px;
-  }
-
-  .modal-btn {
-    min-width: 100px;
-    padding: 10px 12px;
-    font-size: 12px;
-  }
-
-  .thumbnail {
-    width: 70px;
-    height: 70px;
   }
 }
