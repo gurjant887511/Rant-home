@@ -35,6 +35,7 @@ const PropertyDetailsModal = ({ property, isOpen, onClose }) => {
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
+  
 
   return (
     <div className="modal-overlay" onClick={onClose}>
